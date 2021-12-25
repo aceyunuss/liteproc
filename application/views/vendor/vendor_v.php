@@ -26,9 +26,9 @@
         <h4 class="card-title mb-0">Data Commodity</h4>
       </div>
       <div class="card-body">
-        <a class="btn btn-success btn-md" href="<?= site_url('commodity/add') ?> "><i class="fa fa-plus"></i>Add Commodity<a>
+        <a class="btn btn-success btn-md" href="<?= site_url('vendor/sync') ?> "><i class="fa fa-exchange"></i> Sinkron Pengadaan.com<a>
             <div class="table-responsive">
-              <table id="com_table" class="table table-bordered table-striped"></table>
+              <table id="vnd_table" class="table table-bordered table-striped"></table>
             </div>
       </div>
     </div>
@@ -55,38 +55,24 @@
 
 
     function operateFormatter(value, row, index) {
-      var link = "<?php echo site_url('commodity') ?>";
-
-      if (row.status == "Active") {
-        cls = "danger"
-        act = "Deactivate"
-      } else {
-        cls = "success"
-        act = "Activate"
-      }
+      var link = "<?php echo site_url('vendor') ?>";
 
       return [
         '<a class="btn btn-info btn-xs action" href="' + link + '/detail/' + value + '">',
         'Detail',
-        '</a>  ',
-        '<a class="btn btn-primary btn-xs action" href="' + link + '/edit/' + value + '">',
-        'Edit',
-        '</a>  ',
-        '<a onclick="return confirm(\'Are you sure?\')"  class="btn btn-' + cls + ' btn-xs action" href="' + link + '/ch_status/' + value + '">',
-        act,
-        '</a>  ',
+        '</a>',
       ].join('');
     }
   </script>
 
   <script type="text/javascript">
-    var $com_table = $('#com_table')
+    var $vnd_table = $('#vnd_table')
 
     $(function() {
 
-      $com_table.bootstrapTable({
+      $vnd_table.bootstrapTable({
 
-        url: "<?php echo site_url('commodity/get_data_commodity') ?>",
+        url: "<?php echo site_url('vendor/get_data_vendor') ?>",
         selectItemName: "vendor_tender[]",
         striped: true,
         sidePagination: 'server',
@@ -177,24 +163,24 @@
       });
 
       setTimeout(function() {
-        $com_table.bootstrapTable('resetView');
+        $vnd_table.bootstrapTable('resetView');
       }, 200);
 
-      $com_table.on('expand-row.bs.table', function(e, index, row, $detail) {
+      $vnd_table.on('expand-row.bs.table', function(e, index, row, $detail) {
         $detail.html(detailFormatter(index, row, "alias_vendor"));
       });
 
 
-      $com_table.on('expand-row.bs.table', function(e, index, row, $detail) {
+      $vnd_table.on('expand-row.bs.table', function(e, index, row, $detail) {
         $detail.html(detailFormatter(index, row));
 
       });
-      $com_table.on('all.bs.table', function(e, name, args) {
+      $vnd_table.on('all.bs.table', function(e, name, args) {
         //console.log(name, args);
       });
 
       function getIdSelections() {
-        return $.map($com_table.bootstrapTable('getSelections'), function(row) {
+        return $.map($vnd_table.bootstrapTable('getSelections'), function(row) {
           return row.com_code
         });
       }

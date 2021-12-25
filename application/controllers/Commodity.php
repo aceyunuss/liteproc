@@ -90,7 +90,7 @@ class Commodity extends Core_Controller
     $limit = (isset($get['limit']) && !empty($get['limit'])) ? $get['limit'] : 10;
     $search = (isset($get['search']) && !empty($get['search'])) ? $this->db->escape_like_str(strtolower($get['search'])) : "";
     $offset = (isset($get['offset']) && !empty($get['offset'])) ? $get['offset'] : 0;
-    $field_order = (isset($get['sort']) && !empty($get['sort'])) ? $get['sort'] : "com_code";
+    $field_order = (isset($get['sort']) && !empty($get['sort'])) ? $get['sort'] : "updated_date";
 
 
     if (!empty($search)) {

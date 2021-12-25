@@ -46,7 +46,7 @@
               <a class="nav-link" href="<?= site_url('commodity') ?>">Commodity</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/dropdowns.html">Vendor</a>
+              <a class="nav-link" href="<?= site_url('vendor') ?>">Vendor</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="pages/set_background.html">Position</a>
