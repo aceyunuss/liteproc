@@ -87,6 +87,7 @@ class Commodity_m extends CI_Model
       $this->db->where('com_code', $code);
     }
     $this->db->join("commodity_group", "commodity_group.group_code=commodity.group_code", "left");
+    $this->db->join("(select group_code as p_code, group_name as p_name from commodity_group) p", "p.p_code=commodity_group.group_parent", "left");
 
     return $this->db->get("commodity");
   }

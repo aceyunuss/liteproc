@@ -145,7 +145,7 @@ class Commodity extends Core_Controller
       redirect('commodity');
     } else {
       $data['pg_title'] = "Detail Commodity";
-      $data['group_lv1'] = $check;
+      $data['com'] = $check;
 
       $this->template('commodity/detail_commodity_v', $data);
     }
