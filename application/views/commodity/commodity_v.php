@@ -4,24 +4,35 @@
     <div class="row page-title-header">
       <div class="col-12">
         <div class="page-header">
-          <h4 class="page-title">Settings</h4>
+          <h4 class="page-title"><?= $pg_title ?></h4>
         </div>
       </div>
     </div>
+
+    <?php
+    $msg = $this->session->userdata('message');
+    if (!empty($msg)) { ?>
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <?php echo $msg ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <?php $this->session->unset_userdata('message');
+    } ?>
 
     <div class="card">
       <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-        <h4 class="card-title mb-0">Background</h4>
+        <h4 class="card-title mb-0">Data Commodity</h4>
       </div>
       <div class="card-body">
         <a class="btn btn-success btn-md" href="<?= site_url('commodity/add') ?> "><i class="fa fa-plus"></i>Add Commodity<a>
-        <div class="table-responsive">
-          <table id="daftar_vendor" class="table table-bordered table-striped"></table>
-        </div>
+            <div class="table-responsive">
+              <table id="com_table" class="table table-bordered table-striped"></table>
+            </div>
       </div>
     </div>
   </div>
-
 
 
 
@@ -42,72 +53,84 @@
       }
     });
 
-    function detailFormatter(index, row, url) {
 
-      var mydata = $.getCustomJSON("<?php echo site_url('Procurement') ?>/" + url);
+    function operateFormatter(value, row, index) {
+      var link = "<?php echo site_url('commodity') ?>";
 
-      var html = [];
-      $.each(row, function(key, value) {
-        var data = $.grep(mydata, function(e) {
-          return e.field == key;
-        });
+      if (row.status == "Active") {
+        cls = "danger"
+        act = "Deactivate"
+      } else {
+        cls = "success"
+        act = "Activate"
+      }
 
-        if (typeof data[0] !== 'undefined') {
-
-          html.push('<p><b>' + data[0].alias + ':</b> ' + value + '</p>');
-        }
-      });
-
-      return html.join('');
-
+      return [
+        '<a class="btn btn-secondary btn-xs action" href="' + link + '/detail/' + value + '">',
+        'Detail',
+        '</a>  ',
+        '<a class="btn btn-primary btn-xs action" href="' + link + '/edit/' + value + '">',
+        'Edit',
+        '</a>  ',
+        '<a class="btn btn-' + cls + ' btn-xs action" href="' + link + '/ch_status/' + value + '">',
+        act,
+        '</a>  ',
+      ].join('');
     }
   </script>
 
   <script type="text/javascript">
-    var $daftar_vendor = $('#daftar_vendor'),
-      selections = [];
-  </script>
+    var $com_table = $('#com_table')
 
-  <script type="text/javascript">
     $(function() {
 
-      $("input[name='vendor_district']").change(function() {
+      $com_table.bootstrapTable({
 
-        var val = $(this).val();
-        $.ajax({
-          url: "<?php echo site_url('procurement/set_session/selection_district') ?>/" + val,
-          success: function() {
-            $daftar_vendor.bootstrapTable('refresh');
-          }
-        })
-
-      });
-
-      $daftar_vendor.bootstrapTable({
-
-        url: "<?php echo site_url('Procurement/data_vendor_tender') ?>",
+        url: "<?php echo site_url('commodity/get_data_commodity') ?>",
         selectItemName: "vendor_tender[]",
         striped: true,
         sidePagination: 'server',
+        smartDisplay: false,
         cookie: true,
         cookieExpire: '1h',
+        showExport: true,
         showFilter: true,
         flat: true,
+        keyEvents: false,
+        showMultiSort: false,
+        reorderableColumns: false,
+        resizable: false,
         pagination: true,
+        cardView: false,
+        detailView: false,
         search: true,
+        showRefresh: true,
+        showToggle: true,
         clickToSelect: true,
+        showColumns: true,
+
         cookieIdTable: "vendor_tender",
 
-        idField: "vendor_id",
+        idField: "com_code",
         columns: [{
-            field: 'checkbox',
-            checkbox: true,
+            field: 'com_code',
+            title: 'Action',
+            align: 'center',
+            valign: 'middle',
+            formatter: operateFormatter
+          },
+          {
+            field: 'com_code',
+            title: 'Code',
+            sortable: true,
+            order: true,
+            searchable: true,
             align: 'center',
             valign: 'middle'
           },
           {
-            field: 'vendor_name',
-            title: 'Nama Vendor',
+            field: 'name',
+            title: 'Name',
             sortable: true,
             order: true,
             searchable: true,
@@ -115,85 +138,75 @@
             valign: 'middle'
           },
           {
-            field: 'fin_class',
-            title: 'Klasifikasi Vendor',
+            field: 'type',
+            title: 'Type',
             sortable: true,
             order: true,
             searchable: true,
             align: 'center',
             valign: 'middle'
           },
-
+          {
+            field: 'group_code',
+            title: 'Group Code',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
+            field: 'group_name',
+            title: 'Group Name',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'left',
+            valign: 'middle'
+          },
+          {
+            field: 'updated_date',
+            title: 'Updated Date',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
         ]
-
       });
 
-
       setTimeout(function() {
-        $daftar_vendor.bootstrapTable('resetView');
+        $com_table.bootstrapTable('resetView');
       }, 200);
 
-      $daftar_vendor.on('expand-row.bs.table', function(e, index, row, $detail) {
+      $com_table.on('expand-row.bs.table', function(e, index, row, $detail) {
         $detail.html(detailFormatter(index, row, "alias_vendor"));
       });
 
-      $daftar_vendor.on('check.bs.table  check-all.bs.table', function() {
 
-        selections = getIdSelections();
-        var param = "";
-        $.each(selections, function(i, val) {
-          param += val + "=1&";
-        });
-        $.ajax({
-          url: "<?php echo site_url('Procurement/selection/selection_vendor_tender') ?>",
-          data: param,
-          type: "get"
-        });
-
-      });
-      $daftar_vendor.on('uncheck.bs.table uncheck-all.bs.table', function() {
-
-        selections = getIdSelections();
-
-        var param = "";
-        $.each(selections, function(i, val) {
-          param += val + "=0&";
-        });
-        $.ajax({
-          url: "<?php echo site_url('Procurement/selection/selection_vendor_tender') ?>",
-          data: param,
-          type: "get"
-        });
-      });
-      $daftar_vendor.on('expand-row.bs.table', function(e, index, row, $detail) {
+      $com_table.on('expand-row.bs.table', function(e, index, row, $detail) {
         $detail.html(detailFormatter(index, row));
 
       });
-      $daftar_vendor.on('all.bs.table', function(e, name, args) {
+      $com_table.on('all.bs.table', function(e, name, args) {
         //console.log(name, args);
       });
 
       function getIdSelections() {
-        return $.map($daftar_vendor.bootstrapTable('getSelections'), function(row) {
-          return row.vendor_id
+        return $.map($com_table.bootstrapTable('getSelections'), function(row) {
+          return row.com_code
         });
       }
 
       function responseHandler(res) {
         $.each(res.rows, function(i, row) {
-          row.state = $.inArray(row.vendor_id, selections) !== -1;
+          row.state = $.inArray(row.com_code, selections) !== -1;
         });
         return res;
       }
 
+
+
     });
-
-
-    // $('form').submit(function(e) {
-    //   var responact = $("select[name='status_inp[0]'] option:selected").text();
-    //   if ($('#daftar_vendor input[type=checkbox]:checked').length == 0 && $('#metode_pengadaan_inp').val() != 2 && responact != "Simpan Sebagai Draft") {
-    //     e.preventDefault();
-    //     alert('Tidak Ada Vendor Yang Diundang');
-    //   }
-    // })
   </script>
