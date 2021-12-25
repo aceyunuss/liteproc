@@ -58,7 +58,7 @@ class Commodity extends Core_Controller
       'updated_date'  => date('Y-m-d H:i:s')
     ];
 
-    if ($post['type'] == "G") {
+    if ($post['type'] == "Goods") {
       $insert['brand_name']  = $post['brand_name'];
       $insert['brand_model'] = $post['brand_model'];
       $insert['colour']      = $post['colour'];
@@ -189,6 +189,64 @@ class Commodity extends Core_Controller
 
     redirect('commodity');
   }
+
+
+
+  public function edit($code)
+  {
+
+    $check = $this->Commodity_m->getCommodity($code)->row_array();
+
+    if (empty($check)) {
+
+      $this->setMessage("Commodity not found");
+      redirect('commodity');
+    } else {
+
+      $data['pg_title'] = "Edit Commodity";
+      $data['com'] = $check;
+      $data['group_lv1'] = $this->Commodity_m->getGroupCom("", 1)->result_array();
+
+      $this->template('commodity/edit_commodity_v', $data);
+    }
+  }
+
+
+
+  public function submit_edit()
+  {
+
+    $post = $this->input->post();
+
+    $update = [
+      'name'          => $post['name'],
+      'uom'           => $post['uom'],
+      'spec'          => $post['spec'],
+      'others'        => $post['others'],
+      'updated_date'  => date('Y-m-d H:i:s')
+    ];
+
+    if ($post['type'] == "Goods") {
+      $update['brand_name']  = $post['brand_name'];
+      $update['brand_model'] = $post['brand_model'];
+      $update['colour']      = $post['colour'];
+      $update['dimension']   = (int)$post['long'] . "," . (int)$post['width'] . "," . (int)$post['height'];
+    }
+
+    $this->db->trans_begin();
+
+    $this->Commodity_m->updateCommodity($post['code'], $update);
+
+    if ($this->db->trans_status() !== FALSE) {
+      $this->db->trans_commit();
+      $this->setMessage("Success edit commodity");
+      redirect('commodity');
+    } else {
+      $this->db->trans_rollback();
+      $this->setMessage("Failed edit commodity");
+    }
+  }
+
 
   public function sync()
   {
