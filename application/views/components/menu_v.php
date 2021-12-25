@@ -43,7 +43,7 @@
         <div class="collapse" id="master">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/buttons.html">Catalog</a>
+              <a class="nav-link" href="<?= site_url('commodity') ?>">Commodity</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="pages/ui-features/dropdowns.html">Vendor</a>

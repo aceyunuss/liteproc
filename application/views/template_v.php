@@ -26,6 +26,12 @@
   <script src="assets/js/jquery.min.js"></script>
 
   <link rel="stylesheet" href="assets/js/sweetalert/dist/sweetalert2.min.css">
+
+
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
+  <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/locale/bootstrap-table-zh-US.min.js"></script>
+
 </head>
 
 <?php include("components/header_v.php") ?>

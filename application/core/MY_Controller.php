@@ -66,108 +66,6 @@ class Core_Controller extends CI_Controller
     }
   }
 
-  /*
-  private function goCurl($api_endpoint = "", $api_body = [], $api_header = "")
-  {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, APISITE . $api_endpoint);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_ENCODING, "");
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-    curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $api_header);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($api_body));
-
-    $result = curl_exec($ch);
-    $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-    if (curl_errno($ch)) {
-      $result = "{\"status\": \"Error Curl " . curl_error($ch) . "\"}";
-    }
-
-    curl_close($ch);
-
-    $result_arr = json_decode($result, true);
-    $result_arr['code'] = $http_status;
-
-    return $result_arr;
-  }
-
-
-  private function getToken()
-  {
-
-    $bd = [
-      'private_key' => APIKEY,
-      'client'      => APICLIENT
-    ];
-
-    $hd = [
-      "Content-Type: application/json",
-      "cache-control: no-cache",
-    ];
-
-    $token = $this->goCurl("/auth/get_token", $bd, $hd);
-
-    $token_key = $this->aes->redmoon($token['token']);
-
-    if ($token['code'] == 200) {
-
-      $date = new DateTime();
-      $date->add(new DateInterval('PT' . $token['expired_in'] . 'S'));
-      $token_exp =  $date->format('Y-m-d H:i:s');
-
-      $ses = ['token_key' => $token_key, 'token_exp' => $token_exp];
-      $this->session->set_userdata($ses);
-    }
-
-    return $token;
-  }
-
-
-  public function goPost($endpoint = "", $body = [])
-  {
-
-    $token_time = isset($this->session->userdata['token_exp']) ? new DateTime($this->session->userdata['token_exp']) : new DateTime('now');
-    $now = new DateTime('now');
-    
-    echo '<pre>';
-    var_dump($this->session);
-
-    if (!isset($this->session->userdata['token_key']) || (isset($this->session->userdata['token_key']) && $now >= $token_time)) {
-      $gettoken = $this->getToken();
-    }
-
-    echo '<pre>';
-    var_dump($this->session);
-    die();
-
-    if ($gettoken['code'] == 200) {
-
-      $header = [
-        "Content-Type: application/json",
-        "cache-control: no-cache",
-        "Authorization: Bearer " . $gettoken['token'],
-      ];
-
-      $ret = $this->goCurl($endpoint, $body, $header);
-    } else {
-
-      $ret = [
-        'code'    => 505,
-        'status'  => "Failed",
-        'message' => "Failed get token"
-      ];
-    }
-
-    return json_encode($ret);
-  }
-  */
-
-
   public function setMessage($message)
   {
     if (!empty($message)) {
@@ -176,5 +74,68 @@ class Core_Controller extends CI_Controller
       }
       $this->session->set_userdata("message", $message);
     }
+  }
+
+
+  private function dio_curl($endpont, $postfield)
+  {
+
+    $curl = curl_init();
+    $url = $this->db->get_where('master', ['key' => 'api_pdc'])->row()->val;
+
+    curl_setopt($curl, CURLOPT_URL, $url . $endpont);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); //delete when certificate is done     
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $postfield);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ['Content-Type: application/json', 'Accept: application/json']);
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+      $data =  "cURL Error #:" . $err;
+    } else {
+      $data = json_decode($response, true);
+    }
+
+    return $data;
+  }
+
+
+  private function getToken()
+  {
+    $id = $this->db->get_where('master', ['key' => 'buyer_id'])->row()->val;
+    $domain = $this->db->get_where('master', ['key' => 'buyer_domain'])->row()->val;
+
+    $tokenurl   = "security/token";
+    $tokenfield = "{  \n   \"buyerId\": \"" . $id . "\",  \n   \"domain\": \"" . $domain . "\",  \n   \"type\": 0  \n }";
+
+    $token = $this->dio_curl($tokenurl, $tokenfield);
+
+    return $token;
+  }
+
+
+  public function getPDC($endpont)
+  {
+    $token = $this->getToken();
+
+    if (isset($token['resultData'])) {
+
+      $access = [
+        "accessKey" => $token['resultData']['accessKey'],
+        "accessToken" => $token['resultData']['accessToken']
+      ];
+
+      $data = $this->dio_curl($endpont, json_encode($access));
+      $ret  = $data['resultData'];
+    } else {
+      $ret = "error";
+    }
+
+    return $ret;
   }
 }
