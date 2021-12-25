@@ -152,6 +152,44 @@ class Commodity extends Core_Controller
   }
 
 
+
+  public function ch_status($code)
+  {
+
+    $check = $this->Commodity_m->getCommodity($code)->row_array();
+
+    if (empty($check)) {
+
+      $this->setMessage("Commodity not found");
+    } else {
+
+      if ($check['status'] == "Active") {
+        $msg = "Deactivate";
+        $update['status'] = "Deactive";
+      } else {
+        $msg = "Activate";
+        $update['status'] = "Aactive";
+      }
+
+      $update['updated_date'] = date("Y-m-d H:i:s");
+
+      $this->db->trans_begin();
+
+      $this->Commodity_m->updateCommodity($code, $update);
+
+      if ($this->db->trans_status() !== FALSE) {
+        $this->db->trans_commit();
+        $this->setMessage("Success $msg commodity");
+        redirect('commodity');
+      } else {
+        $this->db->trans_rollback();
+        $this->setMessage("Failed $msg commodity");
+      }
+    }
+
+    redirect('commodity');
+  }
+
   public function sync()
   {
     $com = $this->getPDC("ComGroup/findAll");

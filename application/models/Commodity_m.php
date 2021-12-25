@@ -71,16 +71,6 @@ class Commodity_m extends CI_Model
   }
 
 
-  public function getBg($id = "")
-  {
-    if (!empty($id)) {
-      $this->db->where('id', $id);
-    }
-
-    return $this->db->get("background");
-  }
-
-
   public function getCommodity($code = "")
   {
     if (!empty($code)) {
@@ -93,20 +83,13 @@ class Commodity_m extends CI_Model
   }
 
 
-  public function deleteBg($id)
+  public function updateCommodity($code, $data)
   {
-    $this->db->where('bg_id', $id)->delete("background");
-
-    return $this->db->affected_rows();
-  }
-
-  public function updateBg($id = "", $data)
-  {
-    if (!empty($id)) {
-      $this->db->where('bg_id', $id);
+    if (!empty($code)) {
+      $this->db->where('com_code', $code);
     }
 
-    $this->db->update("background", $data);
+    $this->db->update("commodity", $data);
 
     return $this->db->affected_rows();
   }
