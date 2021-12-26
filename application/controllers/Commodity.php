@@ -54,6 +54,7 @@ class Commodity extends Core_Controller
       'uom'           => $post['uom'],
       'spec'          => $post['spec'],
       'others'        => $post['others'],
+      'status'        => "Active",
       'created_date'  => date('Y-m-d H:i:s'),
       'updated_date'  => date('Y-m-d H:i:s')
     ];
@@ -168,7 +169,7 @@ class Commodity extends Core_Controller
         $update['status'] = "Deactive";
       } else {
         $msg = "Activate";
-        $update['status'] = "Aactive";
+        $update['status'] = "Active";
       }
 
       $update['updated_date'] = date("Y-m-d H:i:s");

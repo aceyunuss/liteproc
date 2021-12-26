@@ -49,7 +49,7 @@
               <a class="nav-link" href="<?= site_url('vendor') ?>">Vendor</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/set_background.html">Position</a>
+              <a class="nav-link" href="<?= site_url('division') ?>">Division</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="pages/set_background.html">Hieararchy</a>
