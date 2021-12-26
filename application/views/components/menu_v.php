@@ -51,9 +51,6 @@
             <li class="nav-item">
               <a class="nav-link" href="<?= site_url('division') ?>">Division</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="pages/set_background.html">Hieararchy</a>
-            </li>
           </ul>
         </div>
       </li>
@@ -73,9 +70,6 @@
         </a>
         <div class="collapse" id="proc">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/buttons.html">To-Do list</a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="pages/ui-features/dropdowns.html">Create</a>
             </li>

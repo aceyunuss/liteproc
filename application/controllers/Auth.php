@@ -28,14 +28,14 @@ class Auth extends Core_Controller
 
   public function login()
   {
-    $un = $this->security->xss_clean($this->input->post('username'));
+    $em = $this->security->xss_clean($this->input->post('email'));
     $pw = $this->security->xss_clean($this->input->post('password'));
 
-    if (!empty($un) && !empty($pw)) {
+    if (!empty($em) && !empty($pw)) {
 
       $this->load->model('Users_m');
 
-      $log = $this->Users_m->checkLogin($un, $pw);
+      $log = $this->Users_m->checkLogin($em, $pw);
 
       if (!empty($log)) {
 
@@ -48,10 +48,10 @@ class Auth extends Core_Controller
 
         redirect(site_url('home'));
       } else {
-        $this->setMessage("User tidak ditemukan");
+        $this->setMessage("User not found");
       }
     } else {
-      $this->setMessage("Harap lengkapi username dan passwor");
+      $this->setMessage("Fill email and password");
     }
     redirect(site_url('home'));
   }

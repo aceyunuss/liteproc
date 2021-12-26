@@ -31,9 +31,9 @@
             <div class="auto-form-wrapper">
               <form method="POST" action="<?= site_url('auth/login') ?>">
                 <div class="form-group">
-                  <label class="label">Username</label>
+                  <label class="label">Email</label>
                   <div class="input-group">
-                    <input type="text" name="username" class="form-control" placeholder="Username">
+                    <input type="text" name="email" class="form-control" placeholder="Email">
                     <div class="input-group-append">
                       <span class="input-group-text">
                         <i class="mdi mdi-check-circle-outline"></i>
