@@ -66,13 +66,13 @@
       }
 
       return [
-        '<a class="btn btn-info btn-xs action" href="' + link + '/detail/' + value + '">',
+        '<a class="btn btn-outline-info btn-xs action" href="' + link + '/detail/' + value + '">',
         'Detail',
         '</a>  ',
-        '<a class="btn btn-primary btn-xs action" href="' + link + '/edit/' + value + '">',
+        '<a class="btn btn-outline-primary btn-xs action" href="' + link + '/edit/' + value + '">',
         'Edit',
         '</a>  ',
-        '<a onclick="return confirm(\'Are you sure?\')"  class="btn btn-' + cls + ' btn-xs action" href="' + link + '/ch_status/' + value + '">',
+        '<a onclick="return confirm(\'Are you sure?\')"  class="btn btn-outline-' + cls + ' btn-xs action" href="' + link + '/ch_status/' + value + '">',
         act,
         '</a>  ',
       ].join('');

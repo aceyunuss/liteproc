@@ -27,6 +27,4 @@
 <!-- <script src="assets/js/shared/jquery.cookie.js" type="text/javascript"></script> -->
 </body>
 
-<input type="hidden" id="<?= sha1('apiclient') ?>" value="<?= APICLIENT ?>">
-
 </html>

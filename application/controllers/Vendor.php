@@ -36,26 +36,22 @@ class Vendor extends Core_Controller
 
     if (!empty($search)) {
       $this->db->group_start();
-      $this->db->like("com_code", $search);
-      $this->db->or_like("vendor.group_code", $search);
-      $this->db->or_like("LOWER(type)", $search);
-      $this->db->or_like("LOWER(name)", $search);
-      $this->db->or_like("LOWER(group_name)", $search);
-      $this->db->or_like("updated_date", $search);
+      $this->db->like("LOWER(vendor_name)", $search);
+      $this->db->or_like("LOWER(email_address)", $search);
+      $this->db->or_like("LOWER(address_street)", $search);
+      $this->db->or_like("last_sync", $search);
       $this->db->group_end();
     }
 
-    $this->db->select('com_code');
+    $this->db->select('vendor_id');
     $data['total'] = $this->Vendor_m->getVendor()->num_rows();
 
     if (!empty($search)) {
       $this->db->group_start();
-      $this->db->like("com_code", $search);
-      $this->db->or_like("vendor.group_code", $search);
-      $this->db->or_like("LOWER(type)", $search);
-      $this->db->or_like("LOWER(name)", $search);
-      $this->db->or_like("LOWER(group_name)", $search);
-      $this->db->or_like("updated_date", $search);
+      $this->db->like("LOWER(vendor_name)", $search);
+      $this->db->or_like("LOWER(email_address)", $search);
+      $this->db->or_like("LOWER(address_street)", $search);
+      $this->db->or_like("last_sync", $search);
       $this->db->group_end();
     }
 
@@ -75,21 +71,107 @@ class Vendor extends Core_Controller
   }
 
 
-  public function detail($code)
+  public function detail($vendor_id)
   {
-    $check = $this->Vendor_m->getVendor($code)->row_array();
+    $data = [
+      'jumlah' => 1,
+      'header' => [],
+      'alamat' => [],
+      'tipe' => [],
+      'akta' => [],
+      'izin_lain' => [],
+      'agent_importir' => [],
+      'board' => [],
+      'bank' => [],
+      'financial' => [],
+      'barang' => [],
+      'sdm' => [],
+      'sertifikasi' => [],
+      'fasilitas' => [],
+      'pengalaman' => [],
+      'tambahan' => [],
+      'dokumen' => [],
+    ];
 
-    if (empty($check)) {
+    $buyer_id = $this->db->get_where('master', ['key' => 'buyer_id'])->row()->val;
 
-      $this->setMessage("Vendor not found");
-      redirect('vendor');
+    $header = $this->getPDC("BuyerProduct/findByBuyerOrVendor?buyerId=$buyer_id&vendorId=$vendor_id");
+    $detail = $this->getPDC("VendorDetail/findByBuyerOrVendor?buyerId=$buyer_id&vendorId=$vendor_id");
+
+    if (is_null($header)) {
+
+      $mydata['header'] = 404;
+      $mydata['text']   = "Data vendor tidak valid";
+    } else if ($header == "error") {
+
+      $mydata['header'] = 501;
+      $mydata['text']   = "Tidak dapat terhubung ke web service. Silakan hubungi admin.";
     } else {
-      $data['pg_title'] = "Detail Vendor";
-      $data['com'] = $check;
 
-      $this->template('vendor/detail_vendor_v', $data);
+      $tipe   = $detail[0]['listVndCompanyType'];
+      $mytipe = [];
+
+      if (!empty($tipe)) {
+        foreach ($tipe as $key => $value) {
+          $mytipe[] = ['company_type' => $value['companyType']];
+        }
+      }
+
+      $this->db->select("type as catalog_type, product_name, product_description, brand, vendor_product.source , vendor_product.type , vendor_product.product_code");
+      $this->db->distinct();
+      $this->db->join("commodity_group", "commodity_group.group_code = vendor_product.product_code", "left");
+      $barang = $this->Vendor_m->getProduct($vendor_id)->result_array();
+
+      $data['vendor_id']        = $vendor_id;
+      $data['header']           = $header[0];
+      $data['tipe']             = $detail[0]['listVndCompanyType'];
+      $data['tipe']             = $mytipe;
+      $data['alamat']           = $detail[0]['listVndAddress'];
+      $data['akta']             = $detail[0]['listVndAkta'];
+      $data['board']            = $detail[0]['listVndBoard'];
+      $data['bank']             = $detail[0]['listVndBank'];
+      $data['financial']        = $detail[0]['listVndFinRpt'];
+      $data['barang']           = $barang;
+      $data['izin_lain']        = $detail[0]['listVndIjin'];
+      $data['sdm']              = $detail[0]['listVndSdm'];
+      $data['sertifikasi']      = $detail[0]['listVndCert'];
+      $data['fasilitas']        = $detail[0]['listVndEquip'];
+      $data['pengalaman']       = $detail[0]['listVndCv'];
+      $data['tambahan']         = $detail[0]['listVndAdd'];
+      $data['dokumen']          = $detail[0]['listVndSuppdoc'];
+      $data['url_doc']          = "https://vendor.pengadaan.com/Download/$vendor_id";
+
+      $mydata = array();
+
+      foreach ($data as $key => $value) {
+        $k = strtolower(preg_replace('/\B([A-Z])/', '_$1', $key));
+        $mydata[$k] = $value;
+        if (is_array($value) && !empty($value)) {
+          foreach ($value as $key2 => $value2) {
+            $k2 = strtolower(preg_replace('/\B([A-Z])/', '_$1', $key2));
+            $mydata[$k][$k2] = $value2;
+            if (is_array($value2) && !empty($value2)) {
+              foreach ($value2 as $key3 => $value3) {
+                $k3 = strtolower(preg_replace('/\B([A-Z])/', '_$1', $key3));
+                $mydata[$k][$k2][$k3] = $value3;
+                if (is_array($value3) && !empty($value3)) {
+                  foreach ($value3 as $key4 => $value4) {
+                    $k4 = strtolower(preg_replace('/\B([A-Z])/', '_$1', $key4));
+                    $mydata[$k][$k2][$k3][$k4] = $value4;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
+
+    $mydata['pg_title'] = "Detail Vendor";
+
+    $this->template('vendor/detail_vendor_v', $mydata);
   }
+
 
 
 

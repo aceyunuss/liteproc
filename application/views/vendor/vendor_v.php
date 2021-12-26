@@ -9,21 +9,9 @@
       </div>
     </div>
 
-    <?php
-    $msg = $this->session->userdata('message');
-    if (!empty($msg)) { ?>
-      <div class="alert alert-primary alert-dismissible fade show" role="alert">
-        <?php echo $msg ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <?php $this->session->unset_userdata('message');
-    } ?>
-
     <div class="card">
       <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-        <h4 class="card-title mb-0">Data Commodity</h4>
+        <h4 class="card-title mb-0">Data Vendor</h4>
       </div>
       <div class="card-body">
         <a class="btn btn-success btn-md" href="<?= site_url('vendor/sync') ?> "><i class="fa fa-exchange"></i> Sinkron Pengadaan.com<a>
@@ -58,7 +46,7 @@
       var link = "<?php echo site_url('vendor') ?>";
 
       return [
-        '<a class="btn btn-info btn-xs action" href="' + link + '/detail/' + value + '">',
+        '<a class="btn btn-outline-info btn-xs action" href="' + link + '/detail/' + value + '">',
         'Detail',
         '</a>',
       ].join('');
@@ -97,26 +85,17 @@
 
         cookieIdTable: "vendor_tender",
 
-        idField: "com_code",
+        idField: "vendor_id",
         columns: [{
-            field: 'com_code',
+            field: 'vendor_id',
             title: 'Action',
             align: 'center',
             valign: 'middle',
             formatter: operateFormatter
           },
           {
-            field: 'com_code',
-            title: 'Code',
-            sortable: true,
-            order: true,
-            searchable: true,
-            align: 'center',
-            valign: 'middle'
-          },
-          {
-            field: 'name',
-            title: 'Name',
+            field: 'vendor_name',
+            title: 'Vendor Name',
             sortable: true,
             order: true,
             searchable: true,
@@ -124,26 +103,8 @@
             valign: 'middle'
           },
           {
-            field: 'type',
-            title: 'Type',
-            sortable: true,
-            order: true,
-            searchable: true,
-            align: 'center',
-            valign: 'middle'
-          },
-          {
-            field: 'group_code',
-            title: 'Group Code',
-            sortable: true,
-            order: true,
-            searchable: true,
-            align: 'center',
-            valign: 'middle'
-          },
-          {
-            field: 'group_name',
-            title: 'Group Name',
+            field: 'email_address',
+            title: 'Email',
             sortable: true,
             order: true,
             searchable: true,
@@ -151,12 +112,21 @@
             valign: 'middle'
           },
           {
-            field: 'updated_date',
-            title: 'Updated Date',
+            field: 'address_street',
+            title: 'Address',
             sortable: true,
             order: true,
             searchable: true,
-            align: 'center',
+            align: 'left',
+            valign: 'middle'
+          },
+          {
+            field: 'last_sync',
+            title: 'Last Sync',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'left',
             valign: 'middle'
           },
         ]

@@ -119,7 +119,7 @@ class Core_Controller extends CI_Controller
   }
 
 
-  public function getPDC($endpont)
+  public function getPDC($endpoint)
   {
     $token = $this->getToken();
 
@@ -130,7 +130,7 @@ class Core_Controller extends CI_Controller
         "accessToken" => $token['resultData']['accessToken']
       ];
 
-      $data = $this->dio_curl($endpont, json_encode($access));
+      $data = $this->dio_curl($endpoint, json_encode($access));
       $ret  = $data['resultData'];
     } else {
       $ret = "error";

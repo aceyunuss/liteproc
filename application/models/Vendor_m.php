@@ -56,4 +56,17 @@ class Vendor_m extends CI_Model
 
     return $this->db->affected_rows();
   }
+
+
+  public function getProduct($vendor_id = "", $product_id = "")
+  {
+    if (!empty($product_id)) {
+      $this->db->where('produc$product_id', $product_id);
+    }
+    if (!empty($vendor_id)) {
+      $this->db->where('vendor_id', $vendor_id);
+    }
+
+    return $this->db->get("vendor_product");
+  }
 }
