@@ -42,7 +42,7 @@ class Auth extends Core_Controller
         $data_session = [
           'user_id' => $log['user_id'],
           'name'    => $log['fullname'],
-          'role'    => $log['role']
+          'role'    => $log['role_name']
         ];
         $this->session->set_userdata('user_ses', $data_session);
 

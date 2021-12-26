@@ -22,7 +22,7 @@
   <!-- Layout styles -->
   <link rel="stylesheet" href="<?= base_url() ?>/assets/css/demo_1/style.css">
   <!-- End Layout styles -->
-  <link rel="shortcut icon" href="<?= base_url() ?>/images/favicon.ico" />
+  <link rel="shortcut icon" href="<?= base_url() ?>/assets/images/adw.ico" />
   <script src="<?= base_url() ?>/assets/js/jquery.min.js"></script>
 
   <link rel="stylesheet" href="<?= base_url() ?>/assets/js/sweetalert/dist/sweetalert2.min.css">
@@ -55,4 +55,9 @@
 <script src="<?= base_url() ?>/assets/js/shared/off-canvas.js"></script>
 <script src="<?= base_url() ?>/assets/js/shared/misc.js"></script>
 
-<script src="<?= base_url() ?>/assets/js/shared/jquery.cookie.js" type="text/javascript"></script>
+<!-- <script src="<?= base_url() ?>/assets/js/shared/jquery.cookie.js" type="text/javascript"></script> -->
+
+<script src="assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="assets/vendors/js/vendor.bundle.addons.js"></script>
+<script src="assets/js/shared/off-canvas.js"></script>
+<script src="assets/js/shared/misc.js"></script>

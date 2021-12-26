@@ -6,12 +6,11 @@
       <li class="nav-item nav-profile">
         <a href="#" class="nav-link">
           <div class="profile-image">
-            <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="profile image">
-            <div class="dot-indicator bg-success"></div>
+            <i class="fa fa-smile-o fa-3x"></i>
           </div>
           <div class="text-wrapper">
-            <p class="profile-name">Admin</p>
-            <p class="designation">Super User</p>
+            <p class="profile-name"><?= $this->session->userdata('user_ses')['name'] ?></p>
+            <p class="designation"><?= $this->session->userdata('user_ses')['role'] ?></p>
           </div>
         </a>
       </li>
@@ -22,18 +21,6 @@
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
-      <!-- <li class="nav-item menu-schedule">
-        <a class="nav-link" href="<?= site_url('schedule') ?>">
-          <i class="menu-icon typcn typcn-shopping-bag"></i>
-          <span class="menu-title">Schedule</span>
-        </a>
-      </li>
-      <li class="nav-item menu-settings">
-        <a class="nav-link" href="<?= site_url('settings') ?>">
-          <i class=" menu-icon typcn typcn-shopping-bag"></i>
-          <span class="menu-title">Settings</span>
-        </a>
-      </li> -->
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
           <i class="menu-icon typcn typcn-coffee"></i>

@@ -18,7 +18,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="assets/css/shared/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="assets/images/favicon.ico" />
+  <link rel="shortcut icon" href="assets/images/adw.ico" />
   <link rel="stylesheet" href="assets/js/sweetalert/dist/sweetalert2.min.css">
 </head>
 
