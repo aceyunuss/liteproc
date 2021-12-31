@@ -9,8 +9,8 @@
             <i class="fa fa-smile-o fa-3x"></i>
           </div>
           <div class="text-wrapper">
-            <p class="profile-name"><?= $this->session->userdata('user_ses')['name'] ?></p>
-            <p class="designation"><?= $this->session->userdata('user_ses')['role'] ?></p>
+            <p class="profile-name" style="font-size:17px;"><?= $this->session->userdata('user_ses')['name'] ?></p>
+            <p class="designation" style="font-size:12px;"><?= $this->session->userdata('user_ses')['role'] ?></p>
           </div>
         </a>
       </li>
@@ -21,7 +21,7 @@
           <span class="menu-title">Dashboard</span>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item menu-commodity menu-vendor menu-division">
         <a class="nav-link" data-toggle="collapse" href="#master" aria-expanded="false" aria-controls="master">
           <i class="menu-icon typcn typcn-coffee"></i>
           <span class="menu-title">Master Data</span>
@@ -49,7 +49,7 @@
         </a>
       </li>
 
-      <li class="nav-item">
+      <li class="nav-item menu-procurement">
         <a class="nav-link" data-toggle="collapse" href="#proc" aria-expanded="false" aria-controls="proc">
           <i class="menu-icon typcn typcn-coffee"></i>
           <span class="menu-title">Procurement</span>
@@ -58,13 +58,13 @@
         <div class="collapse" id="proc">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/dropdowns.html">Create</a>
+              <a class="nav-link" href="<?= site_url('procurement/create') ?>">Create</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/ui-features/dropdowns.html">Monitor</a>
+              <a class="nav-link" href="<?= site_url('procurement/monitor') ?>">Monitor</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="pages/set_background.html">Evaluation Template</a>
+              <a class="nav-link" href="<?= site_url('procurement/eval') ?>">Evaluation Template</a>
             </li>
           </ul>
         </div>
