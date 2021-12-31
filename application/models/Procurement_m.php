@@ -118,4 +118,10 @@ class Procurement_m extends CI_Model
 
     return $this->db->affected_rows();
   }
+
+
+  public function getTodo()
+  {
+    return $this->db->get("v_todo");
+  }
 }

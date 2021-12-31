@@ -29,4 +29,10 @@ class Procurement extends Core_Controller
   {
     include('procurement/req/submit_req.php');
   }
+
+
+  public function get_todo()
+  {
+    include('procurement/data_todo.php');
+  }
 }

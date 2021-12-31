@@ -70,11 +70,15 @@
     <div class="row">
       <div class="col-md-12 grid-margin">
         <div class="card">
+          <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
+            <h4 class="card-title mb-0">To-do List</h4>
+          </div>
+
           <div class="card-body">
             <div class="row">
               <div class="col-lg-12">
                 <div class="table-responsive">
-                  <table id="div_table" class="table table-strikped"></table>
+                  <table id="todo_table" class="table table-striped"></table>
                 </div>
               </div>
             </div>
@@ -108,35 +112,24 @@
 
 
     function operateFormatter(value, row, index) {
-      var link = "<?php echo site_url('division') ?>";
-
-      if (row.status == "Active") {
-        cls = "danger"
-        act = "Deactivate"
-      } else {
-        cls = "success"
-        act = "Activate"
-      }
-
+      var link = "<?php echo site_url('procurement') ?>";
+      var typ = row.category
       return [
-        '<a class="btn btn-outline-primary btn-xs action" href="' + link + '/edit/' + value + '">',
-        'Edit',
-        '</a>  ',
-        '<a onclick="return confirm(\'Are you sure?\')"  class="btn btn-outline-' + cls + ' btn-xs action" href="' + link + '/ch_status/' + value + '">',
-        act,
+        '<a class="btn btn-outline-primary btn-xs action" href="' + link + '/' + typ + '/' + value + '">',
+        'Process',
         '</a>  ',
       ].join('');
     }
   </script>
 
   <script type="text/javascript">
-    var $div_table = $('#div_table')
+    var $todo_table = $('#todo_table')
 
     $(function() {
 
-      $div_table.bootstrapTable({
+      $todo_table.bootstrapTable({
 
-        url: "<?php echo site_url('division/get_data_division') ?>",
+        url: "<?php echo site_url('procurement/get_todo') ?>",
         selectItemName: "vendor_tender[]",
         striped: true,
         sidePagination: 'server',
@@ -161,18 +154,18 @@
 
         cookieIdTable: "vendor_tender",
 
-        idField: "div_id",
+        idField: "hist_id",
         columns: [{
-            field: 'div_id',
-            title: 'Action',
+            field: 'hist_id',
+            title: '#',
             align: 'center',
             valign: 'middle',
             width: '20%',
             formatter: operateFormatter
           },
           {
-            field: 'div_code',
-            title: 'Code',
+            field: 'number',
+            title: 'Number',
             sortable: true,
             order: true,
             searchable: true,
@@ -180,7 +173,7 @@
             valign: 'middle'
           },
           {
-            field: 'div_name',
+            field: 'name',
             title: 'Name',
             sortable: true,
             order: true,
@@ -189,8 +182,17 @@
             valign: 'middle'
           },
           {
-            field: 'updated_date',
-            title: 'Updated Date',
+            field: 'role',
+            title: 'Current Role',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
+            field: 'pid_name',
+            title: 'Process',
             sortable: true,
             order: true,
             searchable: true,
@@ -201,24 +203,24 @@
       });
 
       setTimeout(function() {
-        $div_table.bootstrapTable('resetView');
+        $todo_table.bootstrapTable('resetView');
       }, 200);
 
-      $div_table.on('expand-row.bs.table', function(e, index, row, $detail) {
+      $todo_table.on('expand-row.bs.table', function(e, index, row, $detail) {
         $detail.html(detailFormatter(index, row, "alias_vendor"));
       });
 
 
-      $div_table.on('expand-row.bs.table', function(e, index, row, $detail) {
+      $todo_table.on('expand-row.bs.table', function(e, index, row, $detail) {
         $detail.html(detailFormatter(index, row));
 
       });
-      $div_table.on('all.bs.table', function(e, name, args) {
+      $todo_table.on('all.bs.table', function(e, name, args) {
         //console.log(name, args);
       });
 
       function getIdSelections() {
-        return $.map($div_table.bootstrapTable('getSelections'), function(row) {
+        return $.map($todo_table.bootstrapTable('getSelections'), function(row) {
           return row.div_id
         });
       }
