@@ -138,4 +138,49 @@ class Core_Controller extends CI_Controller
 
     return $ret;
   }
+
+
+
+
+  public function selection($selector)
+  {
+
+    $get = $this->input->get();
+
+    $filter_add = array();
+    $filter_del = array();
+
+    $selection = $this->data[$selector];
+
+    foreach ($get as $key => $value) {
+      if ($value == 1) {
+        $filter_add[] = $key;
+      } else {
+        $filter_del[] = $key;
+      }
+    }
+
+    foreach ($filter_add as $key => $value) {
+      if (!empty($selection)) {
+        if (!in_array($value, $selection)) {
+          $selection[] = $value;
+        }
+      } else {
+        $selection[] = $value;
+      }
+    }
+
+    if (!empty($filter_del) && is_array($selection)) {
+      $selection = array_intersect($selection, $filter_del);
+    }
+
+    if (empty($get)) {
+      $selection = array();
+    } else {
+    }
+
+    $selection = @array_unique($selection);
+
+    $this->session->set_userdata($selector, $selection);
+  }
 }

@@ -157,6 +157,25 @@ class Procurement_m extends CI_Model
   }
 
 
+
+  public function getPrcHist($id = "", $prc_number = "")
+  {
+    if (!empty($id)) {
+      $this->db->where(['prh_id' => $id]);
+    }
+
+    if (!empty($prc_number)) {
+      $this->db->where(['prc_number' => $prc_number]);
+    }
+
+    $this->db->select("prh_id as hist_id, prh_name as name, prh_role as role, prh_comment as comment, prh_attachment as att, prh_pid as pid, prh_date as date, prc_number as number, pid_name as process");
+
+    $this->db->join("process_flow", "pid=prh_pid", "left");
+
+    return $this->db->get("prc_history");
+  }
+
+
   public function getProcessFlow($id)
   {
     if (!empty($id)) {
@@ -175,6 +194,17 @@ class Procurement_m extends CI_Model
   }
 
 
+
+  public function getPrcHead($prc_number)
+  {
+    if (!empty($prc_number)) {
+      $this->db->where(['prc_number' => $prc_number]);
+    }
+    return $this->db->get("prc_header");
+  }
+
+
+
   public function getReqItem($rqi_id = "", $req_number = "")
   {
     if (!empty($rqi_id)) {
@@ -184,6 +214,18 @@ class Procurement_m extends CI_Model
       $this->db->where(['req_number' => $req_number]);
     }
     return $this->db->get("req_item");
+  }
+
+
+  public function getPrcItem($pri_id = "", $prc_number = "")
+  {
+    if (!empty($pri_id)) {
+      $this->db->where(['pri_id' => $pri_id]);
+    }
+    if (!empty($prc_number)) {
+      $this->db->where(['prc_number' => $prc_number]);
+    }
+    return $this->db->get("prc_item");
   }
 
 
@@ -415,5 +457,64 @@ class Procurement_m extends CI_Model
     $this->db
       ->where(['rqh_pid' => 81, 'req_number' => $req_number])
       ->update("req_history", $hist);
+  }
+
+
+  public function getBidVendor()
+  {
+    return $this->db->get('v_bid_vendor');
+  }
+
+
+  public function insertPrcVnd($data)
+  {
+    $this->db->insert_batch("prc_vendor", $data);
+    return $this->db->affected_rows();
+  }
+
+
+  public function updatePrcHist($id, $data)
+  {
+    $this->db->where(['prh_id' => $id])->update("prc_history", $data);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function nextPrc($prc_number, $pid, $role)
+  {
+    $ins = [
+      'prh_role'    => $role,
+      'prh_pid'     => $pid,
+      'prc_number'  => $prc_number
+    ];
+
+    $this->db->insert("prc_history", $ins);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function updatePrcHeader($req_number, $data)
+  {
+    $this->db
+      ->where("prc_number", $req_number)
+      ->update("prc_header", $data);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function getPrcVendor($prv_id = "", $prc_number = "")
+  {
+    if (!empty($prv_id)) {
+      $this->db->where(['prv_id' => $prv_id]);
+    }
+    if (!empty($prc_number)) {
+      $this->db->where(['prc_number' => $prc_number]);
+    }
+
+    $this->db->join("(select distinct vendor_id, vendor_name, class from v_bid_vendor) v", "v.vendor_id=prv_vnd_id", "left");
+    return $this->db->get("prc_vendor");
   }
 }

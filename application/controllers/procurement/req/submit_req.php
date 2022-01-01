@@ -119,6 +119,8 @@ $curr = [
   'rqh_name'        => $user['fullname']
 ];
 
+$update_header['pid'] = $next_pid;
+
 $this->Procurement_m->updateReqHist($hist_id, $curr);
 
 $this->Procurement_m->nextReq($req_number, $next_pid, $next_role);

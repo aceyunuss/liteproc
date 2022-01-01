@@ -10,6 +10,13 @@ class Procurement extends Core_Controller
       redirect('home');
     }
     $this->load->model(['Procurement_m', 'Users_m']);
+
+
+    $selection = array("selection_vendor");
+
+    foreach ($selection as $key => $value) {
+      $this->data[$value] = $this->session->userdata($value);
+    }
   }
 
 
@@ -89,5 +96,29 @@ class Procurement extends Core_Controller
   public function submit_eval_score()
   {
     include('procurement/eval/submit_eval_score.php');
+  }
+
+
+  public function process_prc($hist_id)
+  {
+    include('procurement/prc/process_prc.php');
+  }
+
+
+  public function get_vendor()
+  {
+    include('procurement/prc/data_vendor.php');
+  }
+
+
+  public function submit_prc()
+  {
+    include('procurement/prc/submit_prc.php');
+  }
+
+
+  public function get_selected_vendor()
+  {
+    include('procurement/prc/data_selected_vendor.php');
   }
 }
