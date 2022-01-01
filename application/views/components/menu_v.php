@@ -64,7 +64,7 @@
               <a class="nav-link" href="<?= site_url('procurement/monitor') ?>">Monitor</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?= site_url('procurement/eval') ?>">Evaluation Template</a>
+              <a class="nav-link" href="<?= site_url('procurement/eval_template') ?>">Evaluation Template</a>
             </li>
           </ul>
         </div>

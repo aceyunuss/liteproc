@@ -274,4 +274,12 @@ class Commodity extends Core_Controller
       }
     }
   }
+
+
+  public function load_com($code)
+  {
+    $data = $this->Commodity_m->getCommodity($code)->row_array();
+
+    echo json_encode($data);
+  }
 }

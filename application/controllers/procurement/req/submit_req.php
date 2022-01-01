@@ -65,7 +65,7 @@ if ($pid == 11) {
 
   $this->Procurement_m->insertReqItem($insert_item);
 
-  $next_role  = "PIC PENGADAAN";
+  $next_role  = "PIC PROCUREMENT";
   $next_pid   = 12;
 
   $update_header['pid'] = $next_pid;

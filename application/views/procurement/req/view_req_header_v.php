@@ -9,43 +9,42 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Request Number</label>
           <div class="col-sm-6">
-            <label class="col-form-label">Auto</label>
+            <label class="col-form-label"><?= $req_head['req_number'] ?></label>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">User Requester</label>
           <div class="col-sm-6">
-            <label class="col-form-label"><?= $usr['fullname'] ?></label>
+            <label class="col-form-label"><?= $req_head['user_name'] ?></label>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Division</label>
           <div class="col-sm-6">
-            <label class="col-form-label"><?= $usr['div_name'] ?></label>
+            <label class="col-form-label"><?= $req_head['div_name'] ?></label>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Procurement Name</label>
           <div class="col-sm-6">
-            <input type="text" maxlength="255" class="form-control" name="proc_name" required>
+            <label class="col-form-label"><?= $req_head['proc_name'] ?></label>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Description</label>
           <div class="col-sm-9">
-            <textarea class="form-control" name="proc_desc"></textarea>
+            <label class="col-form-label"><?= $req_head['proc_desc'] ?></label>
           </div>
         </div>
-
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Date Needed</label>
           <div class="col-sm-3">
-            <input type="date" id="datefield" name="needed" class="needed datetimepicker form-control" required>
+            <label class="col-form-label"><?= substr($req_head['date_needed'], 0, 10) ?></label>
           </div>
         </div>
 
@@ -53,21 +52,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-      dd = '0' + dd
-    }
-    if (mm < 10) {
-      mm = '0' + mm
-    }
-    today = yyyy + '-' + mm + '-' + dd;
-    $('.needed').attr("min", today)
-
-  })
-</script>
