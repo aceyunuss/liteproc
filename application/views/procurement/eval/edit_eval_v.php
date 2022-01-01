@@ -11,6 +11,17 @@
 
     <form class="forms-sample" id="eval_form" method="POST" action="<?= site_url('procurement/submit_edit_eval') ?>">
 
+      <?php
+      $msg = $this->session->userdata('message');
+      if (!empty($msg)) { ?>
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+          <?php echo $msg ?>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <?php $this->session->unset_userdata('message');
+      } ?>
       <div class="row">
         <div class="col-md-12 grid-margin">
           <div class="card">
@@ -359,6 +370,8 @@
       let ec = $(this).data("ec")
       $('#ecc').val(ec)
       let de = ""
+      $('.stable tbody').html("")
+
       $.get({
         url: "<?= site_url('procurement/load_score/')  ?>" + ec,
         type: "GET",
