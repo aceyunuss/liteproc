@@ -132,6 +132,10 @@ class Procurement_m extends CI_Model
       $this->db->where(['rqh_id' => $id]);
     }
 
+    if (!empty($req_number)) {
+      $this->db->where(['req_number' => $req_number]);
+    }
+
     $this->db->select("rqh_id as hist_id, rqh_name as name, rqh_role as role, rqh_comment as comment, rqh_attachment as att, rqh_pid as pid, rqh_date as date, req_number as number");
     return $this->db->get("req_history");
   }
@@ -321,5 +325,20 @@ class Procurement_m extends CI_Model
 
       return $this->db->affected_rows();
     }
+  }
+
+
+  public function updateReqItem($id, $data)
+  {
+    $this->db->where(['rqi_id' => $id])->update("req_item", $data);
+
+    return $this->db->affected_rows();
+  }
+
+  public function updateReqHist($id, $data)
+  {
+    $this->db->where(['rqh_id' => $id])->update("req_history", $data);
+
+    return $this->db->affected_rows();
   }
 }

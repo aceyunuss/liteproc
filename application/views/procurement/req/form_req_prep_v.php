@@ -9,14 +9,14 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Bid Opening</label>
           <div class="col-sm-6">
-            <input type="date" id="datefield" name="needed" class="needed datetimepicker form-control" required>
+            <input type="date" id="datefield" name="opening" class="needed datetimepicker form-control" required>
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Bid Closing</label>
           <div class="col-sm-6">
-            <input type="date" id="datefield" name="needed" class="needed datetimepicker form-control" required>
+            <input type="date" id="datefield" name="closing" class="needed datetimepicker form-control" required>
           </div>
         </div>
 
@@ -36,42 +36,12 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Evaluation Template</label>
           <div class="col-sm-6">
-            <select class="form-control" name="method" required>
+            <select class="form-control" name="eval" required>
               <option value="">-- Select --</option>
-              <?php foreach ($eval as $k => $v) { ?>
+              <?php foreach ($eval_template as $k => $v) { ?>
                 <option value="<?= $v['eval_id'] ?>"><?= $v['eval_name'] ?></option>
               <?php } ?>
             </select>
-          </div>
-        </div>
-
-
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Division</label>
-          <div class="col-sm-6">
-            <label class="col-form-label"><?= $usr['div_name'] ?></label>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Procurement Name</label>
-          <div class="col-sm-6">
-            <input type="text" maxlength="255" class="form-control" name="proc_name" required>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Description</label>
-          <div class="col-sm-9">
-            <textarea class="form-control" name="proc_desc"></textarea>
-          </div>
-        </div>
-
-
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Date Needed</label>
-          <div class="col-sm-3">
-            <input type="date" id="datefield" name="needed" class="needed datetimepicker form-control" required>
           </div>
         </div>
 

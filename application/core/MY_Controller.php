@@ -53,9 +53,9 @@ class Core_Controller extends CI_Controller
   }
 
 
-  public function dop($folder = "", $subfolder = "", $file = "")
+  public function dop($folder = "", $file = "")
   {
-    $pth = str_replace("system\\", "", BASEPATH) . "uploads/" . $folder . "/" . $subfolder . "/" . $file;
+    $pth = str_replace("system\\", "", BASEPATH) . "uploads/" . $folder . "/" . $file;
 
     if (file_exists($pth)) {
       $this->load->helper('download');

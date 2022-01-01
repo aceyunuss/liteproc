@@ -12,4 +12,8 @@ $usrdata = $this->session->userdata('user_ses');
 
 $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
 
+$data['hist'] = [];
+
+$data['dir'] = "req";
+
 $this->template('procurement/req/req_flow_v', $data);

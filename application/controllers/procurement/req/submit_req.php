@@ -22,8 +22,8 @@ if (!empty($_FILES['comment_att']['name'])) {
 $this->db->trans_begin();
 
 if ($pid != 11) {
-  $hist = $this->Procurement_m->getHist($hist_id)->row_array();
-  $req_number = $hist['req_number'];
+  $hist = $this->Procurement_m->getReqHist($hist_id)->row_array();
+  $req_number = $hist['number'];
 }
 
 if ($pid == 11) {
@@ -69,7 +69,39 @@ if ($pid == 11) {
   $next_pid   = 12;
 
   $update_header['pid'] = $next_pid;
+} else if ($pid == 12) {
+
+  foreach ($post['com_code'] as $k => $v) {
+
+    $item = [
+      'rqi_code'    => $post['com_code'][$k],
+      'rqi_desc'    => $post['com_name'][$k],
+      'rqi_price'   => $post['price'][$k],
+      'rqi_uom'     => $post['uom'][$k]
+    ];
+
+    $this->Procurement_m->updateReqItem($post['rqi'][$k], $item);
+  }
+
+  $update_header = [
+    'bid_open'  => $post['opening'],
+    'bid_close' => $post['closing'],
+    'method'    => $post['method'],
+    'eval_id'   => $post['eval']
+  ];
+
+  $next_role  = "DIV HEAD";
+  $next_pid   = 13;
 }
+
+$curr = [
+  'rqh_comment'     => $post['comment'],
+  'rqh_attachment'  => $comment_att,
+  'rqh_date'        => date('Y:m:d H:i:s'),
+  'rqh_name'        => $user['fullname']
+];
+
+$this->Procurement_m->updateReqHist($hist_id, $curr);
 
 $this->Procurement_m->nextReq($req_number, $next_pid, $next_role);
 

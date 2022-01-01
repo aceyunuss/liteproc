@@ -11,7 +11,7 @@ $data['req_head'] = $this->Procurement_m->getReqHead($req_number)->row_array();
 
 $data['req_item'] = $this->Procurement_m->getReqItem("", $req_number)->result_array();
 
-$data['req_hist'] = $this->Procurement_m->getReqHist("", $req_number)->result_array();
+$data['hist'] = $this->Procurement_m->getReqHist("", $req_number)->result_array();
 
 $data['pg_title'] = $this->Procurement_m->getProcessFlow($pid)->row()->pid_name;
 
@@ -31,7 +31,10 @@ $data['method'] = [
   3 => 'Tender'
 ];
 
+$data['eval_template'] = $this->Procurement_m->getEval()->result_array();
 
 $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
+
+$data['dir'] = "req";
 
 $this->template('procurement/req/req_flow_v', $data);

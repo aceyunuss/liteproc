@@ -23,6 +23,7 @@
                   <tr>
                     <td>
                       <center><?= $k + 1 ?></center>
+                      <input type="hidden" name="rqi[<?= $v['rqi_id'] ?>]" value="<?= $v['rqi_id'] ?>">
                     </td>
                     <td><?= $v['rqi_free_desc'] ?></td>
                     <td>

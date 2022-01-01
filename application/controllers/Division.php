@@ -193,7 +193,7 @@ class Division extends Core_Controller
 
       $this->db->trans_begin();
 
-      $this->Division_m->updateDivision($post['code'], $update);
+      $this->Division_m->updateDivision($post['div_id'], $update);
 
       if ($this->db->trans_status() !== FALSE) {
         $this->db->trans_commit();
