@@ -73,6 +73,19 @@ class Procurement_m extends CI_Model
   }
 
 
+  public function generatePrc()
+  {
+    $last = $this->db
+      ->select("count(prc_number) + 1 as last")
+      ->get("prc_header")
+      ->row()->last;
+
+    $code = "PRC/" . date('Ym') . "/" . str_repeat(0, 4 - strlen($last)) . $last;
+
+    return $code;
+  }
+
+
   public function nextReq($req_number, $pid, $role)
   {
     $ins = [
@@ -136,7 +149,10 @@ class Procurement_m extends CI_Model
       $this->db->where(['req_number' => $req_number]);
     }
 
-    $this->db->select("rqh_id as hist_id, rqh_name as name, rqh_role as role, rqh_comment as comment, rqh_attachment as att, rqh_pid as pid, rqh_date as date, req_number as number");
+    $this->db->select("rqh_id as hist_id, rqh_name as name, rqh_role as role, rqh_comment as comment, rqh_attachment as att, rqh_pid as pid, rqh_date as date, req_number as number, pid_name as process");
+
+    $this->db->join("process_flow", "pid=rqh_pid", "left");
+
     return $this->db->get("req_history");
   }
 
@@ -340,5 +356,64 @@ class Procurement_m extends CI_Model
     $this->db->where(['rqh_id' => $id])->update("req_history", $data);
 
     return $this->db->affected_rows();
+  }
+
+
+  public function completeReq($req_number, $last_usr, $last_role)
+  {
+    $head = $this->getReqHead($req_number)->row_array();
+    $item = $this->getReqItem("", $req_number)->result_array();
+
+    $head['prc_number'] = $this->generatePrc();
+    $head['created_date'] = date('Y:m:d H:i:s');
+
+    $this->db->insert('prc_header', $head);
+
+    foreach ($item as $v) {
+      $ins_item[] = [
+        'rqi_id'        => $v['rqi_id'],
+        'pri_code'      => $v['rqi_code'],
+        'pri_desc'      => $v['rqi_desc'],
+        'pri_free_desc' => $v['rqi_free_desc'],
+        'pri_qty'       => $v['rqi_qty'],
+        'pri_price'     => $v['rqi_price'],
+        'pri_uom'       => $v['rqi_uom'],
+        'prc_number'    => $head['prc_number'],
+      ];
+    }
+
+    $this->db->insert_batch("prc_item", $ins_item);
+
+    $hist = [
+      'rqh_name' => $last_usr,
+      'rqh_role' => $last_role,
+      'rqh_date'  => date('Y-m-d H:i:s')
+    ];
+
+    $this->db->where(['rqh_pid' => 91, 'req_number' => $req_number])->update("req_history", $hist);
+
+
+    $next_hist = [
+      'prh_role'        => 'PIC PROCUREMENT',
+      'prh_pid'         => 21,
+      'prc_number'      => $head['prc_number'],
+    ];
+
+    $this->db->insert('prc_history', $next_hist);
+  }
+
+
+  public function rejectReq($req_number, $last_usr, $last_role)
+  {
+
+    $hist = [
+      'rqh_name' => $last_usr,
+      'rqh_role' => $last_role,
+      'rqh_date'  => date('Y-m-d H:i:s')
+    ];
+
+    $this->db
+      ->where(['rqh_pid' => 81, 'req_number' => $req_number])
+      ->update("req_history", $hist);
   }
 }

@@ -24,7 +24,7 @@
         <div class="card-body">
           <center>
             <input type="hidden" name="status" value="" id="status">
-            <button style="font-size: 16px;" type="submit" onclick="history.back()" class="btn btn-secondary btn-sm  act" data-stat="n">&nbsp;&nbsp;Back&nbsp;&nbsp;</button>
+            <button style="font-size: 16px;" onclick="history.back()" class="btn btn-secondary btn-sm">&nbsp;&nbsp;Back&nbsp;&nbsp;</button>
             <button style="font-size: 16px;" type="submit" class="btn btn-danger btn-sm  act" data-stat="r">Reject</button>
             <button style="font-size: 16px;" type="submit" class="btn btn-success  btn-sm act" data-stat="y">Submit</button>
           </center>

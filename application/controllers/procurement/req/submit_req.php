@@ -92,6 +92,24 @@ if ($pid == 11) {
 
   $next_role  = "DIV HEAD";
   $next_pid   = 13;
+} else if ($pid == 13) {
+
+  if ($post['status'] == "y") {
+
+    if ($user['role_name'] == "DIV HEAD") {
+
+      $next_role  = "FINANCE";
+      $next_pid   = 13;
+    } else {
+
+      $next_role  = $user['role_name'];
+      $next_pid   = 91;
+    }
+  } else {
+
+    $next_role  = $user['role_name'];
+    $next_pid   = 81;
+  }
 }
 
 $curr = [
@@ -107,6 +125,14 @@ $this->Procurement_m->nextReq($req_number, $next_pid, $next_role);
 
 if (!empty($update_header)) {
   $this->Procurement_m->updateReqHeader($req_number, $update_header);
+}
+
+if ($next_pid == 91) {
+  $this->Procurement_m->completeReq($req_number, $user['fullname'], $user['role_name']);
+}
+
+if ($next_pid == 81) {
+  $this->Procurement_m->rejectReq($req_number, $user['fullname'], $user['role_name']);
 }
 
 if ($this->db->trans_status() !== FALSE) {

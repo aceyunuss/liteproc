@@ -9,17 +9,19 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th style="text-align:center; width:15%;"> Date </th>
-              <th style="text-align:center; width:20%;"> User </th>
-              <th style="text-align:center; width:20%;"> Role </th>
-              <th style="text-align:center; width:30%;"> Comment </th>
-              <th style="text-align:center; width:15%;"> Attachment </th>
+              <th style="text-align:center"> Date </th>
+              <th style="text-align:center"> Process </th>
+              <th style="text-align:center"> User </th>
+              <th style="text-align:center"> Role </th>
+              <th style="text-align:center"> Comment </th>
+              <th style="text-align:center"> Attachment </th>
             </tr>
           </thead>
           <tbody>
             <?php foreach ((array)$hist as $val) { ?>
               <tr>
                 <td class="text-center"><?= $val['date'] ?></td>
+                <td><?= $val['process'] ?></td>
                 <td><?= $val['name'] ?></td>
                 <td><?= $val['role'] ?></td>
                 <td><?= $val['comment'] ?></td>
