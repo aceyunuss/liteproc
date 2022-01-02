@@ -7,7 +7,7 @@
       <div class="card-body">
 
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Request Number</label>
+          <label class="col-sm-2 col-form-label">Procurement Number</label>
           <div class="col-sm-6">
             <label class="col-form-label"><?= $prc_head['prc_number'] ?></label>
           </div>

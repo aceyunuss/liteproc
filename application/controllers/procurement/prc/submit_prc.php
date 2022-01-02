@@ -33,6 +33,7 @@ if ($pid == 21) {
     $ins_vnd[] = [
       'prc_number'  => $prc_number,
       'prv_vnd_id'  => $v,
+      'prv_process' => "Bidding"
     ];
   }
 

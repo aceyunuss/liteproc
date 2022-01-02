@@ -10,6 +10,12 @@ class Vendor_m extends CI_Model
   }
 
 
+  public function checkLogin($email, $password)
+  {
+    return $this->db->select("vendor_id as user_id, vendor_name as fullname, 'VENDOR' as role_name")->where(['login_id' => $email, 'password' => sha1($password)])->get("vendor")->row_array();
+  }
+
+
   public function getVendor($vendor_id = "")
   {
     if (!empty($vendor_id)) {

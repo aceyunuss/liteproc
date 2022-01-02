@@ -517,4 +517,57 @@ class Procurement_m extends CI_Model
     $this->db->join("(select distinct vendor_id, vendor_name, class from v_bid_vendor) v", "v.vendor_id=prv_vnd_id", "left");
     return $this->db->get("prc_vendor");
   }
+
+
+  public function getTodoVendor($vendor_id)
+  {
+    return $this->db->where("vendor_id", $vendor_id)->get("v_todo_vendor");
+  }
+
+
+  public function getPrcVndHead($prv_id)
+  {
+    $this->db->where(['prv_id' => $prv_id]);
+
+    $this->db->join("prc_header", "prc_header.prc_number=prc_vendor.prc_number", "left");
+
+    return $this->db->get("prc_vendor");
+  }
+
+
+  public function getPrcVndItem($pvi_id = "", $prv_id = "")
+  {
+    if (!empty($prv_id)) {
+      $this->db->where(['prv_id' => $prv_id]);
+    }
+    if (!empty($pvi_id)) {
+      $this->db->where(['pvi_id' => $pvi_id]);
+    }
+
+    return $this->db->get("prc_vendor_item");
+  }
+
+
+  public function insertPrcVndItem($data)
+  {
+    $this->db->insert_batch("prc_vendor_item", $data);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function updatePrcVnd($prv_id, $data)
+  {
+    $this->db->where('prv_id', $prv_id)->update("prc_vendor", $data);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function updatePrcVndItem($pvi_id, $data)
+  {
+    $this->db->where('pvi_id', $pvi_id)->update("prc_vendor_item", $data);
+
+    return $this->db->affected_rows();
+  }
 }

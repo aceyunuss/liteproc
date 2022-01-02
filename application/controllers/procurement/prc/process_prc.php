@@ -39,4 +39,6 @@ $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
 
 $data['dir'] = "prc";
 
+$this->session->unset_userdata("selection_vendor");
+
 $this->template('procurement/prc/prc_flow_v', $data);

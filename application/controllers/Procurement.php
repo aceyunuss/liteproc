@@ -121,4 +121,22 @@ class Procurement extends Core_Controller
   {
     include('procurement/prc/data_selected_vendor.php');
   }
+
+
+  public function get_todo_vnd()
+  {
+    include('procurement/data_todo_vendor.php');
+  }
+
+
+  public function bid($id)
+  {
+    include('procurement/prc/process_bid.php');
+  }
+
+
+  public function submit_bid()
+  {
+    include('procurement/prc/submit_bid.php');
+  }
 }

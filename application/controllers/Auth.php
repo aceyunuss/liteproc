@@ -11,8 +11,14 @@ class Auth extends Core_Controller
   public function index()
   {
     if (!is_null($this->session->userdata('user_ses'))) {
+
       $data['pg_title'] = "Dashboard";
-      $this->template('dashboard_v', $data);
+
+      if ($this->session->userdata('user_ses')['role'] == "VENDOR") {
+        $this->template('vnd_dashboard_v', $data);
+      } else {
+        $this->template('dashboard_v', $data);
+      }
     } else {
       $this->load->view("login_v");
     }
@@ -30,12 +36,18 @@ class Auth extends Core_Controller
   {
     $em = $this->security->xss_clean($this->input->post('email'));
     $pw = $this->security->xss_clean($this->input->post('password'));
+    $rl = $this->security->xss_clean($this->input->post('role'));
 
     if (!empty($em) && !empty($pw)) {
 
-      $this->load->model('Users_m');
+      $this->load->model(['Users_m', 'Vendor_m']);
 
-      $log = $this->Users_m->checkLogin($em, $pw);
+      if ($rl == "i") {
+        $log = $this->Users_m->checkLogin($em, $pw, $rl);
+      } else {
+        $log = $this->Vendor_m->checkLogin($em, $pw, $rl);
+      }
+
 
       if (!empty($log)) {
 

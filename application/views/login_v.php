@@ -28,8 +28,11 @@
       <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
         <div class="row w-100">
           <div class="col-lg-4 mx-auto">
+            <p class="h2 text-center tittl">Login Internal</p>
+            <p>
             <div class="auto-form-wrapper">
               <form method="POST" action="<?= site_url('auth/login') ?>">
+                <input type="hidden" id="tit" value="i" name="role">
                 <div class="form-group">
                   <label class="label">Email</label>
                   <div class="input-group">
@@ -57,7 +60,7 @@
                 </div>
                 <div class="form-group d-flex justify-content-between">
                   &nbsp;
-                  <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
+                  <a href="#" id="swc" class="text-small forgot-password text-black">Login as Vendor</a>
                 </div>
               </form>
             </div>
@@ -95,3 +98,32 @@
 </body>
 
 </html>
+
+
+<script>
+  $(document).ready(function() {
+
+    $('#swc').click(function() {
+
+      if ($('#tit').val() == "v") {
+
+        st = "Internal";
+        ft = "Vendor";
+        ds = "inline";
+        ti = "i";
+      } else {
+        st = "Vendor";
+        ft = "Internal";
+        ds = "none";
+        ti = "v";
+      }
+
+      $('.tittl').text("Login " + st)
+      $('#swc').text("Login as " + ft)
+      $('#tit').val(ti);
+      $('.cons').css({
+        'display': ds
+      })
+    })
+  })
+</script>
