@@ -41,24 +41,10 @@ if ($pid == 21) {
 
   $next_role  = "PIC PROCUREMENT";
   $next_pid   = 22;
-} else if ($pid == 13) {
+} else if ($pid == 22) {
 
-  // if ($post['status'] == "y") {
-
-  //   if ($user['role_name'] == "DIV HEAD") {
-
-  //     $next_role  = "FINANCE";
-  //     $next_pid   = 13;
-  //   } else {
-
-  //     $next_role  = $user['role_name'];
-  //     $next_pid   = 91;
-  //   }
-  // } else {
-
-  //   $next_role  = $user['role_name'];
-  //   $next_pid   = 81;
-  // }
+  $next_role  = "PIC PROCUREMENT";
+  $next_pid   = 23;
 }
 
 $curr = [

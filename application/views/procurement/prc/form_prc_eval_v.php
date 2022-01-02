@@ -28,99 +28,99 @@
         </button>
       </div>
       <div class="modal-body" style="overflow-y: auto;">
-        <form id="formscs">
-
-          <input type="hidden" name="prv_id" id="prv" value="">
-
-          <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Header</h4>
-          </div>
-          <div class="card-body">
-
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Bid Number</label>
-              <div class="col-sm-6">
-                <label class="col-form-label" id="bid_number"></label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Attachment</label>
-              <div class="col-sm-6">
-                <label class="col-form-label">
-                  <a href="#" id="att_v" target="_blank"></a>
-                </label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-sm-2 col-form-label">Notes</label>
-              <div class="col-sm-6">
-                <label class="col-form-label" id="notes"></label>
-              </div>
-            </div>
-
-          </div>
 
 
-          <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Item</h4>
-          </div>
-          <div class="card-body">
-            <center>
-              <div class="table-responsive">
-                <table class="table table-striped quo_table">
-                  <thead>
-                    <tr>
-                      <th style="text-align:center; width: 5%;"> No </th>
-                      <th style="text-align:center; width: 60%;"> Commodity </th>
-                      <th style="text-align:center; width: 5%;"> Quantity </th>
-                      <th style="text-align:center; width: 10%;"> UOM </th>
-                      <th style="text-align:center; width: 20%;"> Quot Price </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </center>
-            <hr>
-            <div class="form-group row">
-              <div class="col-sm-8">
-                <h3 style="text-align: right;">Total</h3>
-              </div>
-              <div class="col-sm-4">
-                <h3 style="text-align: right;" class="quo_total">0</h3>
-              </div>
+        <input type="hidden" name="prv_id" id="prv" value="">
+
+        <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
+          <h4 class="card-title mb-0">Header</h4>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Bid Number</label>
+            <div class="col-sm-6">
+              <label class="col-form-label" id="bid_number"></label>
             </div>
           </div>
 
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Attachment</label>
+            <div class="col-sm-6">
+              <label class="col-form-label">
+                <a href="#" id="att_v" target="_blank"></a>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Notes</label>
+            <div class="col-sm-6">
+              <label class="col-form-label" id="notes"></label>
+            </div>
+          </div>
+
+        </div>
 
 
-          <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Evaluation</h4>
-          </div>
-          <div class="card-body evals">
-            <?php foreach ($eval as $key => $value) { ?>
-              <div class="form-group row">
-                <label class="col-sm-4 col-form-label"><?= $value['ec_name'] ?> </label>
-                <div class="col-sm-7">
-                  <select class="form-control ee" required data-ec="<?= $value['ec_id'] ?>">
-                    <option value="">-- Select --</option>
-                    <?php foreach ($value['sc'] as $v) { ?>
-                      <option value="<?= $v['eci_id'] ?>"><?= $v['eci_name'] ?></option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-            <?php } ?>
-          </div>
-          <hr>
+        <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
+          <h4 class="card-title mb-0">Item</h4>
+        </div>
+        <div class="card-body">
           <center>
-            <button type="button" class="btn btn-inverse-warning btn-sm" id="tutup-btn" data-dismiss="modal">Cancel</button>
-            <button class="evalsb btn btn-success btn-sm">Submit</button>
+            <div class="table-responsive">
+              <table class="table table-striped quo_table">
+                <thead>
+                  <tr>
+                    <th style="text-align:center; width: 5%;"> No </th>
+                    <th style="text-align:center; width: 60%;"> Commodity </th>
+                    <th style="text-align:center; width: 5%;"> Quantity </th>
+                    <th style="text-align:center; width: 10%;"> UOM </th>
+                    <th style="text-align:center; width: 20%;"> Quot Price </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
           </center>
-        </form>
+          <hr>
+          <div class="form-group row">
+            <div class="col-sm-8">
+              <h3 style="text-align: right;">Total</h3>
+            </div>
+            <div class="col-sm-4">
+              <h3 style="text-align: right;" class="quo_total">0</h3>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
+          <h4 class="card-title mb-0">Evaluation</h4>
+        </div>
+        <div class="card-body evals">
+          <?php foreach ($eval as $key => $value) { ?>
+            <div class="form-group row">
+              <label class="col-sm-4 col-form-label"><?= $value['ec_name'] ?> </label>
+              <div class="col-sm-7">
+                <select class="form-control ee" data-ec="<?= $value['ec_id'] ?>">
+                  <option value="">-- Select --</option>
+                  <?php foreach ($value['sc'] as $v) { ?>
+                    <option value="<?= $v['eci_id'] ?>"><?= $v['eci_name'] ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+          <?php } ?>
+        </div>
+        <hr>
+        <center>
+          <button type="button" class="btn btn-inverse-warning btn-sm" id="tutup-btn" data-dismiss="modal">Cancel</button>
+          <button class="evalsb btn btn-success btn-sm">Submit</button>
+        </center>
+
       </div>
       <div class="modal-footer">
 
