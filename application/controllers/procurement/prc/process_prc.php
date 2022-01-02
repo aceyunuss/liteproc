@@ -39,6 +39,15 @@ $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
 
 $data['dir'] = "prc";
 
+$this->db->join("(select eval_id as id, eval_name from eval) eval", "eval.id=eval_criteria.eval_id");
+$eval = $this->Procurement_m->getEvalCr("", $data['prc_head']['eval_id'])->result_array();
+
+foreach ($eval as $k => $v) {
+  $eval[$k]['sc'] = $this->Procurement_m->getEvalCrSc('', $v['ec_id'])->result_array();
+}
+
+$data['eval'] = $eval;
+
 $this->session->unset_userdata("selection_vendor");
 
 $this->template('procurement/prc/prc_flow_v', $data);

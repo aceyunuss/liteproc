@@ -139,4 +139,16 @@ class Procurement extends Core_Controller
   {
     include('procurement/prc/submit_bid.php');
   }
+
+
+  public function load_quo($id)
+  {
+    include('procurement/prc/load_quo.php');
+  }
+
+
+  public function submit_prc_eval()
+  {
+    include('procurement/prc/submit_prc_eval.php');
+  }
 }

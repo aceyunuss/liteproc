@@ -10,7 +10,7 @@ $ses_usr = $this->session->userdata('user_ses');
 $user = $this->Users_m->getUsers($ses_usr['user_id'])->row_array();
 
 if (!empty($_FILES['comment_att']['name'])) {
-  $this->session->set_userdata("dir_upload", "prc");
+  $this->session->set_userdata("dir_upload", "bid");
   $upload = $this->ups("comment_att");
   $comment_att = $upload;
 }

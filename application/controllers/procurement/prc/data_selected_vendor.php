@@ -7,7 +7,7 @@ $order = (isset($get['order']) && !empty($get['order'])) ? $get['order'] : "";
 $limit = (isset($get['limit']) && !empty($get['limit'])) ? $get['limit'] : 10;
 $search = (isset($get['search']) && !empty($get['search'])) ? $this->db->escape_like_str(strtolower($get['search'])) : "";
 $offset = (isset($get['offset']) && !empty($get['offset'])) ? $get['offset'] : 0;
-$field_order = (isset($get['sort']) && !empty($get['sort'])) ? $get['sort'] : "vendor_name";
+$field_order = (isset($get['sort']) && !empty($get['sort'])) ? $get['sort'] : "";
 
 $prc_number = str_replace(".", "/", $this->uri->segment(3));
 
@@ -44,7 +44,7 @@ if (!empty($limit)) {
   $this->db->limit($limit, $offset);
 }
 
-$this->db->select('vendor_id, vendor_name, class');
+$this->db->select('vendor_id, vendor_name, class, bid_number, prv_id');
 $rows = $this->Procurement_m->getPrcVendor("", $prc_number)->result_array();
 
 $data['rows'] = $rows;
