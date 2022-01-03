@@ -31,6 +31,8 @@ foreach ($post['go'] as $key => $value) {
 }
 
 
+$this->db->where(['prv_id' => $post['prvs']])->update("prc_vendor", ['eval_status' => 1]);
+
 if ($this->db->trans_status() !== FALSE) {
   $this->db->trans_commit();
   $ret = ['status' => 'success'];

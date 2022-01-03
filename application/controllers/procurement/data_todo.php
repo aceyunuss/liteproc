@@ -19,7 +19,9 @@ if (!empty($search)) {
   $this->db->group_end();
 }
 
-$this->db->select('hist_id');
+$rl = $this->session->userdata('user_ses')['role'];
+
+$this->db->select('hist_id')->where('role', $rl);
 $data['total'] = $this->Procurement_m->getTodo()->num_rows();
 
 if (!empty($search)) {
@@ -39,6 +41,7 @@ if (!empty($limit)) {
   $this->db->limit($limit, $offset);
 }
 
+$this->db->where('role', $rl);
 $rows = $this->Procurement_m->getTodo()->result_array();
 
 $data['rows'] = $rows;

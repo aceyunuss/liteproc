@@ -26,7 +26,7 @@ if (!empty($search)) {
   $this->db->group_end();
 }
 
-$this->db->select('vendor_id');
+$this->db->select('vendor_id')->where('bid_number !=', NULL);
 $data['total'] = $this->Procurement_m->getPrcVendor("", $prc_number)->num_rows();
 
 if (!empty($search)) {
@@ -44,16 +44,13 @@ if (!empty($limit)) {
   $this->db->limit($limit, $offset);
 }
 
-$this->db->select('vendor_id, vendor_name, class, bid_number, prv_id');
+$this->db->select('vendor_id, vendor_name, class, bid_number, prv_id, prv_nego')->where('bid_number !=', NULL);
 $rows = $this->Procurement_m->getPrcVendor("", $prc_number)->result_array();
 
-$topsis = $this->calculate_topsis($prc_number);
-
-$evaluated = array_column($topsis, 'vnd');
-
 foreach ($rows as $key => $value) {
-  $rows[$key]['score'] = in_array($value['vendor_id'], $evaluated) ? $topsis[$value['vendor_id']]['preference'] : '-';
+  $rows[$key]['checkbox'] = in_array($value['prv_nego'], [1, 2]) ? true : false;
 }
+
 $data['rows'] = $rows;
 
 echo json_encode($data);

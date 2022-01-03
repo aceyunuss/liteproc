@@ -408,6 +408,7 @@ class Procurement_m extends CI_Model
 
     $head['prc_number'] = $this->generatePrc();
     $head['created_date'] = date('Y:m:d H:i:s');
+    $head['pid'] = 21;
 
     $this->db->insert('prc_header', $head);
 

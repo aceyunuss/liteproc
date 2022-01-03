@@ -20,12 +20,12 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-sm-2 col-form-label">Method</label>
           <div class="col-sm-6">
             <label class="col-form-label"><?= $method[$prc_head['method']] ?></label>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="form-group row">

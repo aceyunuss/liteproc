@@ -86,7 +86,7 @@ if ($pid == 11) {
   $update_header = [
     'bid_open'  => $post['opening'],
     'bid_close' => $post['closing'],
-    'method'    => $post['method'],
+    // 'method'    => $post['method'],
     'eval_id'   => $post['eval']
   ];
 

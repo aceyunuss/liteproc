@@ -37,4 +37,15 @@ $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
 
 $data['dir'] = "req";
 
+if ($pid == 12) {
+  $act = ["", "Submit"];
+  $shno = "none";
+} else if ($pid == 13) {
+  $act = ["Reject", "Approve"];
+  $shno = "";
+}
+
+$data['act'] = $act;
+$data['shno'] = $shno;
+
 $this->template('procurement/req/req_flow_v', $data);

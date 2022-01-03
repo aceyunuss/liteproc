@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-sm-2 col-form-label">Method</label>
           <div class="col-sm-6">
             <select class="form-control" name="method" required>
@@ -30,7 +30,7 @@
               <?php } ?>
             </select>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="form-group row">

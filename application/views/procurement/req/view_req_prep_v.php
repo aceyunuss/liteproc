@@ -19,13 +19,13 @@
             <label class="col-form-label"><?= substr($req_head['bid_close'], 0, 10) ?></label>
           </div>
         </div>
-
+<!-- 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Method</label>
           <div class="col-sm-6">
             <label class="col-form-label"><?= $method[$req_head['method']] ?></label>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="form-group row">

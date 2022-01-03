@@ -12,7 +12,7 @@ class Procurement extends Core_Controller
     $this->load->model(['Procurement_m', 'Users_m']);
 
 
-    $selection = array("selection_vendor");
+    $selection = array("selection_vendor", "selection_vendor_nego");
 
     foreach ($selection as $key => $value) {
       $this->data[$value] = $this->session->userdata($value);
@@ -151,4 +151,28 @@ class Procurement extends Core_Controller
   {
     include('procurement/prc/submit_prc_eval.php');
   }
+
+
+  public function get_vendor_nego()
+  {
+    include('procurement/prc/data_vendor_nego.php');
+  }
+
+
+  public function nego($id)
+  {
+    include('procurement/prc/process_nego.php');
+  }
+
+
+  public function submit_nego()
+  {
+    include('procurement/prc/submit_nego.php');
+  }
+
+
+  // public function calculate_topsis($prc_number)
+  // {
+  //   include('procurement/prc/calculate_topsis.php');
+  // }
 }

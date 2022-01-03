@@ -51,7 +51,7 @@ $data['eval_template'] = $this->Procurement_m->getEval()->result_array();
 
 $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
 
-$data['dir'] = "prc";
+$data['dir'] = "bid";
 
 if ($this->db->trans_status() !== FALSE) {
   $this->db->trans_commit();

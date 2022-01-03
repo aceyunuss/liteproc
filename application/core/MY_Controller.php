@@ -183,4 +183,93 @@ class Core_Controller extends CI_Controller
 
     $this->session->set_userdata($selector, $selection);
   }
+
+
+  public function calculate_topsis($prc_number)
+  {
+    ##y
+    ## src https://tugasakhir.id/contoh-perhitungan-spk-metode-topsis/
+    ##y
+
+    $dat = $this->db
+      ->select("prv_id, prv_vnd_id")
+      ->get_where("prc_vendor", ['prc_number' => $prc_number, 'eval_status' => 1])
+      ->result_array();
+
+    foreach ($dat as $vc) {
+      $prv[] = $vc['prv_id'];
+    }
+
+    foreach ($dat as $key => $value) {
+      $eval = $this->db
+        ->select("ec_id, prv_id, eci_val")
+        ->get_where('prc_vendor_eval', ['prv_id' => $value['prv_id']])
+        ->result_array();
+
+      foreach ($eval as $ky => $val) {
+        $normalisasi[$value['prv_vnd_id']][$val['ec_id']] = $val['eci_val'];
+
+        $nt[$val['ec_id']] = $this->db
+          ->select("sum((eci_val*eci_val)) as nt")
+          ->where_in('prv_id', $prv)
+          ->get_where("prc_vendor_eval", ['ec_id' => $val['ec_id']])
+          ->row()->nt;
+
+        $wg[$val['ec_id']] = $this->db
+          ->distinct()
+          ->select("ec_weight as wg")
+          ->where_in('prv_id', $prv)
+          ->get_where("prc_vendor_eval", ['ec_id' => $val['ec_id']])
+          ->row()->wg;
+
+        $tp[$val['ec_id']] = $this->db
+          ->distinct()
+          ->select("ec_type as tp")
+          ->where_in('prv_id', $prv)
+          ->get_where("prc_vendor_eval", ['ec_id' => $val['ec_id']])
+          ->row()->tp;
+      }
+    }
+
+    foreach ($normalisasi as $key => $value) {
+      foreach ($value as $k => $v) {
+        $red_normal[$key][$k] = $v / sqrt($nt[$k]);
+      }
+    }
+
+    foreach ($red_normal as $key => $value) {
+      foreach ($value as $k => $v) {
+        $bob_normal[$key][$k] = $v * $wg[$k];
+      }
+    }
+
+    foreach ($bob_normal as $key => $value) {
+      foreach ($value as $k => $v) {
+        $fil[$k][] = $v;
+      }
+    }
+
+    foreach ($fil as $key => $value) {
+      $positive[$key] = $tp[$key] == "Cost" ? min($value) : max($value);
+      $negative[$key] = $tp[$key] == "Cost" ? max($value) : min($value);
+    }
+
+    foreach ($bob_normal as $key => $value) {
+      $tdp = $tdn = 0;
+      foreach ($value as $k => $v) {
+        $dp = ($v - $positive[$k]) * ($v - $positive[$k]);
+        $dn = ($v - $negative[$k]) * ($v - $negative[$k]);
+
+        $tdp += $dp;
+        $tdn += $dn;
+      }
+
+      $tot[$key]['vnd'] = $key;
+      $tot[$key]['positive'] = sqrt($tdp);
+      $tot[$key]['negative'] = sqrt($tdn);
+      $tot[$key]['preference'] = sqrt($tdn) / (sqrt($tdp) + sqrt($tdn));
+    }
+
+    return $tot;
+  }
 }

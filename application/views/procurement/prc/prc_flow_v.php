@@ -25,8 +25,7 @@
           <center>
             <input type="hidden" name="status" value="" id="status">
             <button style="font-size: 16px;" onclick="history.back()" class="btn btn-secondary btn-sm">&nbsp;&nbsp;Back&nbsp;&nbsp;</button>
-            <button style="font-size: 16px;" type="submit" class="btn btn-danger btn-sm  act" data-stat="r">Reject</button>
-            <button style="font-size: 16px;" type="submit" class="btn btn-success  btn-sm act" data-stat="y">Submit</button>
+            <button style="font-size: 16px;" type="submit" class="btn btn-success  btn-sm act" data-stat="y"><?= $act ?></button>
           </center>
         </div>
       </div>

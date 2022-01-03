@@ -48,6 +48,33 @@ foreach ($eval as $k => $v) {
 
 $data['eval'] = $eval;
 
+if ($pid == 23) {
+  $this->db->where('eval_status', 1);
+  $vnd = $this->Procurement_m->getPrcVendor("", $prc_number)->result_array();
+
+  $topsis = $this->calculate_topsis($prc_number);
+
+  foreach ($vnd as $key => $value) {
+    $vnd[$key]['score'] = $topsis[$value['vendor_id']]['preference'];
+  }
+  $data['vnd_list'] = $vnd;
+}
+
+if ($pid == 24) {
+  $this->db->where('is_winner', 1);
+  $data['win'] = $this->Procurement_m->getPrcVendor("", $prc_number)->row()->vendor_name;
+}
+
+
 $this->session->unset_userdata("selection_vendor");
+$this->session->unset_userdata("selection_vendor_nego");
+
+
+if (strtotime($data['prc_head']['bid_close']) > time()) {
+  $this->setMessage("Can't evaluate vendor. Bidding still in process");
+  redirect('home');
+}
+
+$data['act'] = $pid == 24 ? "Approve" : "Submit";
 
 $this->template('procurement/prc/prc_flow_v', $data);

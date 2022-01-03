@@ -45,6 +45,23 @@ if ($pid == 21) {
 
   $next_role  = "PIC PROCUREMENT";
   $next_pid   = 23;
+} else if ($pid == 23) {
+
+  $vn = (isset($this->data['selection_vendor_nego'])) ? $this->data['selection_vendor_nego'] : 0;
+
+  if (isset($post['complete_nego']) && $post['complete_nego'] == 1) {
+
+    $this->db->where(['prc_number' => $prc_number, 'prv_vnd_id' => $post['winner']])->update("prc_vendor", ['is_winner' => 1]);
+    $next_role  = "FINANCE";
+    $next_pid   = 24;
+  } else {
+    $next_role  = "PIC PROCUREMENT";
+    $next_pid   = 23;
+  }
+
+  foreach ($vn as $value) {
+    $this->db->where(['prc_number' => $prc_number, 'prv_vnd_id' => $value])->update('prc_vendor', ['prv_nego' => 1, 'prv_process' => "Negotiation"]);
+  }
 }
 
 $curr = [

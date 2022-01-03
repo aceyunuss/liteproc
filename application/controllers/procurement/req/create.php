@@ -16,4 +16,8 @@ $data['hist'] = [];
 
 $data['dir'] = "req";
 
+$data['act'] = ["", "Submit"];
+
+$data['shno'] = "none";
+
 $this->template('procurement/req/req_flow_v', $data);

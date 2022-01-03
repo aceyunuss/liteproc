@@ -101,7 +101,7 @@
           <h4 class="card-title mb-0">Evaluation</h4>
         </div>
         <div class="card-body evals">
-          <?php foreach ($eval as $key => $value) { ?>
+          <!-- <?php foreach ($eval as $key => $value) { ?>
             <div class="form-group row">
               <label class="col-sm-4 col-form-label"><?= $value['ec_name'] ?> </label>
               <div class="col-sm-7">
@@ -113,14 +113,11 @@
                 </select>
               </div>
             </div>
-          <?php } ?>
+          <?php } ?> -->
         </div>
-        <br>
-        <center class="wase"><h4>This Vendor Was Evaluated</h4></center>
         <hr>
         <center>
-          <button type="button" class="btn btn-inverse-warning btn-sm" id="tutup-btn" data-dismiss="modal">Cancel</button>
-          <button class="evalsb btn btn-success btn-sm">Submit</button>
+          <button type="button" class="btn btn-inverse-warning btn-sm" id="tutup-btn" data-dismiss="modal">Back</button>
         </center>
 
       </div>
@@ -151,13 +148,13 @@
   });
 
 
-  function operateFormatter(value, row, index) {
+  function operateFormatters(value, row, index) {
     var link = "<?php echo site_url('procurement') ?>";
     var dis = row.bid_number == null ? "btn-outline-secondary disabled" : "btn-outline-primary";
     // console.log(is_null(row.bid_number)
     return [
       '<a class="btn btn-xs shmo action ' + dis + '" data-toggle="modal" data-target="#modal_max" data-quo="' + value + '"  href="#">',
-      'Process',
+      'View',
       '</a>  ',
     ].join('');
   }
@@ -202,7 +199,7 @@
           align: 'center',
           valign: 'middle',
           width: '20%',
-          formatter: operateFormatter
+          formatter: operateFormatters
         },
         {
           field: 'vendor_name',
@@ -316,10 +313,6 @@
     $('#notes').text("");
     $('#prv').val("");
 
-    $('.ee').removeAttr("disabled");
-    $('.evalsb').removeAttr("disabled");
-    $('.wase').css("display", "none");
-
     $.get({
       url: "<?= site_url('procurement/load_quo/')  ?>" + quo,
       type: "GET",
@@ -327,15 +320,10 @@
         de = JSON.parse(data)
 
         $('#bid_number').text(de.head.bid_number);
-        $('#att_v').attr("href", "<?= site_url('auth/dop/bid/')  ?>" + de.head.prv_att)
+        $('#att_v').attr("href", "<?= site_url('procurement/auth/dop/bid/')  ?>" + de.head.prv_att)
         $('#att_v').text(de.head.prv_att)
         $('#notes').text(de.head.prv_notes);
         $('#prv').val(de.head.prv_id);
-
-        if (de.head.eval_status == 1) {
-          $('.wase').css("display", "inline");
-          $('.ee').attr("disabled", true)
-        }
 
         total = 0;
         subtotal = 0;
@@ -365,41 +353,4 @@
 
   })
 
-  $('.evalsb').click(function(e) {
-    e.preventDefault()
-
-    ids = new Array();
-
-    $(".ee").each(function(k, v) {
-      id = $(this).data('ec');
-      vl = $(this).val()
-      ids.push({
-        id,
-        vl
-      });
-    });
-
-    prvs = $('#prv').val();
-
-    $.ajax({
-      url: '<?= site_url('procurement/submit_prc_eval') ?>',
-      type: "POST",
-      data: {
-        prvs: prvs,
-        go: ids
-      },
-      dataType: 'json',
-      cache: false,
-      asynce: false,
-      success: (function(data) {
-        if (data.status == "success") {
-          alert("Success")
-          location.reload();
-        } else {
-          alert("Failed")
-        }
-      })
-    });
-
-  })
 </script>
