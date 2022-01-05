@@ -86,6 +86,19 @@ class Procurement_m extends CI_Model
   }
 
 
+  public function generateOrd()
+  {
+    $last = $this->db
+      ->select("count(ord_number) + 1 as last")
+      ->get("ord_header")
+      ->row()->last;
+
+    $code = "ORD/" . date('Ym') . "/" . str_repeat(0, 4 - strlen($last)) . $last;
+
+    return $code;
+  }
+
+
   public function nextReq($req_number, $pid, $role)
   {
     $ins = [
@@ -570,5 +583,146 @@ class Procurement_m extends CI_Model
     $this->db->where('pvi_id', $pvi_id)->update("prc_vendor_item", $data);
 
     return $this->db->affected_rows();
+  }
+
+
+  public function completePrc($prc_number, $last_usr, $last_role)
+  {
+    $head = $this->getPrcHead($prc_number)->row_array();
+
+    $vend = $this->db
+      ->select("prv_id, vendor_id, vendor_name")
+      ->where(['prc_number' => $prc_number, 'is_winner' => 1])
+      ->join("vendor", "vendor_id=prv_vnd_id")
+      ->get("prc_vendor")
+      ->row_array();
+
+    $item = $this->getPrcVndItem("", $vend['prv_id'])->result_array();
+
+    unset($head['date_needed'], $head['bid_open'], $head['bid_close'], $head['eval_id'], $head['req_number']);
+
+    $head['ord_number'] = $this->generateOrd();
+    $head['created_date'] = date('Y:m:d H:i:s');
+    $head['pid'] = 31;
+    $head['vnd_id'] = $vend['vendor_id'];
+    $head['vnd_name'] = $vend['vendor_name'];
+
+    $this->db->insert('ord_header', $head);
+
+    foreach ($item as $v) {
+      $ins_item[] = [
+        'pri_id'        => $v['pri_id'],
+        'ori_code'      => $v['pri_code'],
+        'ori_desc'      => $v['pvi_desc'],
+        'ori_free_desc' => $v['pvi_free_desc'],
+        'ori_qty'       => $v['pvi_qty'],
+        'ori_price'     => !empty($v['pvi_nprice']) ? $v['pvi_nprice'] : $v['pvi_qprice'],
+        'ori_uom'       => $v['pvi_uom'],
+        'ord_number'    => $head['ord_number'],
+      ];
+    }
+
+    $this->db->insert_batch("ord_item", $ins_item);
+
+    $hist = [
+      'prh_name'  => $last_usr,
+      'prh_role'  => $last_role,
+      'prh_date'  => date('Y-m-d H:i:s')
+    ];
+
+    $this->db->where(['prh_pid' => 92, 'prc_number' => $prc_number])->update("prc_history", $hist);
+
+
+    $next_hist = [
+      'orh_role'        => 'PIC PROCUREMENT',
+      'orh_pid'         => 31,
+      'ord_number'      => $head['ord_number'],
+    ];
+
+    $this->db->insert('ord_history', $next_hist);
+  }
+
+
+  public function getOrdHist($id = "", $ord_number = "")
+  {
+    if (!empty($id)) {
+      $this->db->where(['orh_id' => $id]);
+    }
+
+    if (!empty($ord_number)) {
+      $this->db->where(['ord_number' => $ord_number]);
+    }
+
+    $this->db->select("orh_id as hist_id, orh_name as name, orh_role as role, orh_comment as comment, orh_attachment as att, orh_pid as pid, orh_date as date, ord_number as number, pid_name as process");
+
+    $this->db->join("process_flow", "pid=orh_pid", "left");
+
+    return $this->db->get("ord_history");
+  }
+
+
+  public function getOrdHead($ord_number)
+  {
+    if (!empty($ord_number)) {
+      $this->db->where(['ord_number' => $ord_number]);
+    }
+    return $this->db->get("ord_header");
+  }
+
+
+  public function getOrdItem($ori_id = "", $ord_number = "")
+  {
+    if (!empty($ori_id)) {
+      $this->db->where(['ori_id' => $ori_id]);
+    }
+    if (!empty($ord_number)) {
+      $this->db->where(['ord_number' => $ord_number]);
+    }
+    return $this->db->get("ord_item");
+  }
+
+
+  public function updateOrdHist($id, $data)
+  {
+    $this->db->where(['orh_id' => $id])->update("ord_history", $data);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function nextOrd($ord_number, $pid, $role)
+  {
+    $ins = [
+      'orh_role'    => $role,
+      'orh_pid'     => $pid,
+      'ord_number'  => $ord_number
+    ];
+
+    $this->db->insert("ord_history", $ins);
+
+    return $this->db->affected_rows();
+  }
+
+
+  public function updateOrdHeader($ord_number, $data)
+  {
+    $this->db
+      ->where("ord_number", $ord_number)
+      ->update("ord_header", $data);
+
+    return $this->db->affected_rows();
+  }
+
+
+
+  public function completeOrd($ord_number, $last_usr, $last_role)
+  {
+    $hist = [
+      'orh_name'  => $last_usr,
+      'orh_role'  => $last_role,
+      'orh_date'  => date('Y-m-d H:i:s')
+    ];
+
+    $this->db->where(['orh_pid' => 93, 'ord_number' => $ord_number])->update("ord_history", $hist);
   }
 }

@@ -79,7 +79,7 @@
                 <thead>
                   <tr>
                     <th style="text-align:center; width: 5%;"> No </th>
-                    <th style="text-align:center; width: 50%;"> Commodity </th>
+                    <th style="text-align:center; width: 50%;"> Item Name </th>
                     <th style="text-align:center; width: 5%;"> Quantity </th>
                     <th style="text-align:center; width: 10%;"> UOM </th>
                     <th style="text-align:center; width: 15%;"> Quot Price </th>

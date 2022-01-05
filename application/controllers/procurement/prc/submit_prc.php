@@ -62,6 +62,10 @@ if ($pid == 21) {
   foreach ($vn as $value) {
     $this->db->where(['prc_number' => $prc_number, 'prv_vnd_id' => $value])->update('prc_vendor', ['prv_nego' => 1, 'prv_process' => "Negotiation"]);
   }
+} else if ($pid = 24) {
+
+  $next_role  = "FINANCE";
+  $next_pid   = 92;
 }
 
 $curr = [
@@ -81,13 +85,10 @@ if (!empty($update_header)) {
   $this->Procurement_m->updatePrcHeader($prc_number, $update_header);
 }
 
-// if ($next_pid == 91) {
-//   $this->Procurement_m->completePrc($prc_number, $user['fullname'], $user['role_name']);
-// }
+if ($next_pid == 92) {
+  $this->Procurement_m->completePrc($prc_number, $user['fullname'], $user['role_name']);
+}
 
-// if ($next_pid == 81) {
-//   $this->Procurement_m->rejectPrc($prc_number, $user['fullname'], $user['role_name']);
-// }
 
 if ($this->db->trans_status() !== FALSE) {
   $this->db->trans_commit();

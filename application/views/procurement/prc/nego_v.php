@@ -90,7 +90,7 @@
                     <thead>
                       <tr>
                         <th style="text-align:center; width: 5%;"> No </th>
-                        <th style="text-align:center; width: 40%;"> Commodity </th>
+                        <th style="text-align:center; width: 40%;"> Item Name </th>
                         <th style="text-align:center; width: 5%;"> Quantity </th>
                         <th style="text-align:center; width: 10%;"> Estimated Price </th>
                         <th style="text-align:center; width: 10%;"> UOM </th>

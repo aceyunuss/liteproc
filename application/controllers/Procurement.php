@@ -171,8 +171,20 @@ class Procurement extends Core_Controller
   }
 
 
-  // public function calculate_topsis($prc_number)
-  // {
-  //   include('procurement/prc/calculate_topsis.php');
-  // }
+  public function process_ord($hist_id)
+  {
+    include('procurement/ord/process_ord.php');
+  }
+
+  public function submit_ord()
+  {
+    include('procurement/ord/submit_ord.php');
+  }
+
+  
+  public function shp($hist_id)
+  {
+    include('procurement/ord/process_shp.php');
+  }
+
 }

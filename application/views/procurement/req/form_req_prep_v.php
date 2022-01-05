@@ -20,18 +20,6 @@
           </div>
         </div>
 
-        <!-- <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Method</label>
-          <div class="col-sm-6">
-            <select class="form-control" name="method" required>
-              <option value="">-- Select --</option>
-              <?php foreach ($method as $k => $v) { ?>
-                <option value="<?= $k ?>"><?= $v ?></option>
-              <?php } ?>
-            </select>
-          </div>
-        </div> -->
-
 
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Evaluation Template</label>
@@ -41,6 +29,18 @@
               <?php foreach ($eval_template as $k => $v) { ?>
                 <option value="<?= $v['eval_id'] ?>"><?= $v['eval_name'] ?></option>
               <?php } ?>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">Procurement Type</label>
+          <div class="col-sm-6">
+            <select class="form-control" name="type" required>
+              <option value="">-- Select --</option>
+              <option value="Goods">Goods</option>
+              <option value="Service">Service</option>
+              <option value="Goods and Service">Goods and Service</option>
             </select>
           </div>
         </div>
