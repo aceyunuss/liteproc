@@ -196,6 +196,10 @@ class Core_Controller extends CI_Controller
       ->get_where("prc_vendor", ['prc_number' => $prc_number, 'eval_status' => 1])
       ->result_array();
 
+    if (empty($dat)) {
+      return [];
+    }
+    
     foreach ($dat as $vc) {
       $prv[] = $vc['prv_id'];
     }

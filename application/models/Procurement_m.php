@@ -198,21 +198,25 @@ class Procurement_m extends CI_Model
   }
 
 
-  public function getReqHead($req_number)
+  public function getReqHead($req_number = "")
   {
     if (!empty($req_number)) {
       $this->db->where(['req_number' => $req_number]);
     }
+    $this->db->join("(select pid as pp, pid_name as pname from process_flow) p", "p.pp=req_header.pid", "left");
+
     return $this->db->get("req_header");
   }
 
 
 
-  public function getPrcHead($prc_number)
+  public function getPrcHead($prc_number = "")
   {
     if (!empty($prc_number)) {
       $this->db->where(['prc_number' => $prc_number]);
     }
+    $this->db->join("(select pid as pp, pid_name as pname from process_flow) p", "p.pp=prc_header.pid", "left");
+
     return $this->db->get("prc_header");
   }
 
@@ -661,11 +665,13 @@ class Procurement_m extends CI_Model
   }
 
 
-  public function getOrdHead($ord_number)
+  public function getOrdHead($ord_number = "")
   {
     if (!empty($ord_number)) {
       $this->db->where(['ord_number' => $ord_number]);
     }
+    $this->db->join("(select pid as pp, pid_name as pname from process_flow) p", "p.pp=ord_header.pid", "left");
+
     return $this->db->get("ord_header");
   }
 

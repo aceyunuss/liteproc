@@ -71,8 +71,8 @@ $this->session->unset_userdata("selection_vendor_nego");
 
 
 if (strtotime($data['prc_head']['bid_close']) > time()) {
-  // $this->setMessage("Can't evaluate vendor. Bidding still in process");
-  // redirect('home');
+  $this->setMessage("Can't evaluate vendor. Bidding still in process");
+  redirect('home');
 }
 
 $data['act'] = $pid == 24 ? "Approve" : "Submit";

@@ -176,15 +176,57 @@ class Procurement extends Core_Controller
     include('procurement/ord/process_ord.php');
   }
 
+
   public function submit_ord()
   {
     include('procurement/ord/submit_ord.php');
   }
 
-  
+
   public function shp($hist_id)
   {
     include('procurement/ord/process_shp.php');
   }
 
+
+  public function monitor()
+  {
+    include('procurement/monitor.php');
+  }
+
+
+  public function data_monitor_req()
+  {
+    include('procurement/data_monitor_req.php');
+  }
+
+
+  public function data_monitor_prc()
+  {
+    include('procurement/data_monitor_prc.php');
+  }
+
+
+  public function data_monitor_ord()
+  {
+    include('procurement/data_monitor_ord.php');
+  }
+
+
+  public function detail_req($req_number)
+  {
+    include('procurement/detail_req.php');
+  }
+
+
+  public function detail_prc($prc_number)
+  {
+    include('procurement/detail_prc.php');
+  }
+
+
+  public function detail_ord($ord_number)
+  {
+    include('procurement/detail_ord.php');
+  }
 }
