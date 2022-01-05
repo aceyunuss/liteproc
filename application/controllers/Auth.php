@@ -60,10 +60,10 @@ class Auth extends Core_Controller
 
         redirect(site_url('home'));
       } else {
-        $this->setMessage("User not found");
+        // $this->setMessage("User not found");
       }
     } else {
-      $this->setMessage("Fill email and password");
+      // $this->setMessage("Fill email and password");
     }
     redirect(site_url('home'));
   }

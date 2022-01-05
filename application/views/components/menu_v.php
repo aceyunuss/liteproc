@@ -14,7 +14,6 @@
           </div>
         </a>
       </li>
-      <li class="nav-item nav-category">Main Menu</li>
       <li class="nav-item menu-home">
         <a class="nav-link" href="<?= site_url('home') ?>">
           <i class="menu-icon typcn typcn-document-text"></i>
