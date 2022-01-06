@@ -271,7 +271,7 @@ class Core_Controller extends CI_Controller
       $tot[$key]['vnd'] = $key;
       $tot[$key]['positive'] = sqrt($tdp);
       $tot[$key]['negative'] = sqrt($tdn);
-      $tot[$key]['preference'] = sqrt($tdn) / (sqrt($tdp) + sqrt($tdn));
+      $tot[$key]['preference'] = (sqrt($tdp) + sqrt($tdn)) == 0 ? 1 : (sqrt($tdn) / (sqrt($tdp) + sqrt($tdn)));
     }
 
     return $tot;

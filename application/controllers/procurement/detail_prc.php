@@ -32,6 +32,8 @@ foreach ($eval as $k => $v) {
 
 $data['eval'] = $eval;
 
+$data['eval_name'] = $this->Procurement_m->getEval($data['prc_head']['eval_id'])->row()->eval_name;
+
 $this->db->where('eval_status', 1);
 $vnd = $this->Procurement_m->getPrcVendor("", $prc_number)->result_array();
 

@@ -19,6 +19,8 @@ $usrdata = $this->session->userdata('user_ses');
 
 $data['eval_template'] = $this->Procurement_m->getEval()->result_array();
 
+$data['eval_name'] = $this->Procurement_m->getEval($data['req_head']['eval_id'])->row()->eval_name;
+
 $data['usr'] = $this->Users_m->getUsers($usrdata['user_id'])->row_array();
 
 $data['dir'] = "req";

@@ -8,7 +8,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label"><?= $shp ?> Attachment</label>
           <div class="col-sm-8">
-            <a target="_blank" href="<?= site_url('auth/dop/' . $dir . "/" . $ord_head['vnd_att']) ?>"><?= $ord_head['vnd_att'] ?></a>
+            <label class="col-form-label"><a target="_blank" href="<?= site_url('auth/dop/' . $dir . "/" . $ord_head['vnd_att']) ?>"><?= $ord_head['vnd_att'] ?></a></label>
           </div>
         </div>
         <div class="form-group row">

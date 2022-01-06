@@ -65,12 +65,13 @@ if ($pid == 24) {
   $data['win'] = $this->Procurement_m->getPrcVendor("", $prc_number)->row()->vendor_name;
 }
 
+$data['eval_name'] = $this->Procurement_m->getEval($data['prc_head']['eval_id'])->row()->eval_name;
 
 $this->session->unset_userdata("selection_vendor");
 $this->session->unset_userdata("selection_vendor_nego");
 
 
-if (strtotime($data['prc_head']['bid_close']) > time()) {
+if (strtotime($data['prc_head']['bid_close']) > time() && $pid == 22) {
   $this->setMessage("Can't evaluate vendor. Bidding still in process");
   redirect('home');
 }

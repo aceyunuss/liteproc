@@ -423,6 +423,7 @@ class Procurement_m extends CI_Model
     $head = $this->getReqHead($req_number)->row_array();
     $item = $this->getReqItem("", $req_number)->result_array();
 
+    unset($head['pp'], $head['pname']);
     $head['prc_number'] = $this->generatePrc();
     $head['created_date'] = date('Y:m:d H:i:s');
     $head['pid'] = 21;
@@ -603,8 +604,7 @@ class Procurement_m extends CI_Model
 
     $item = $this->getPrcVndItem("", $vend['prv_id'])->result_array();
 
-    unset($head['date_needed'], $head['bid_open'], $head['bid_close'], $head['eval_id'], $head['req_number']);
-
+    unset($head['date_needed'], $head['bid_open'], $head['bid_close'], $head['eval_id'], $head['req_number'], $head['pp'], $head['pname']);
     $head['ord_number'] = $this->generateOrd();
     $head['created_date'] = date('Y:m:d H:i:s');
     $head['pid'] = 31;

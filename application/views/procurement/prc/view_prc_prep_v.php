@@ -23,7 +23,7 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label">Evaluation Template</label>
           <div class="col-sm-6">
-            <label class="col-form-label"><?= substr($prc_head['date_needed'], 0, 10) ?></label>
+            <label class="col-form-label"><?= $eval_name ?></label>
           </div>
         </div>
 

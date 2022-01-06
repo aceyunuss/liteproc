@@ -80,7 +80,7 @@ $this->Procurement_m->nextOrd($ord_number, $next_pid, $next_role);
 $update_header['pid'] = $next_pid;
 
 if (!empty($update_header)) {
-  $this->Procurement_m->updateOrdHeader($prc_number, $update_header);
+  $this->Procurement_m->updateOrdHeader($ord_number, $update_header);
 }
 
 if ($next_pid == 93) {
