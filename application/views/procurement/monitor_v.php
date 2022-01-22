@@ -8,6 +8,18 @@
       </div>
     </div>
 
+    <?php
+    $msg = $this->session->userdata('message');
+    if (!empty($msg)) { ?>
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        <?php echo $msg ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <?php $this->session->unset_userdata('message');
+    } ?>
+    
     <div class="row">
       <div class="col-md-12 grid-margin">
         <div class="card">

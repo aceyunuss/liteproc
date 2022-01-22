@@ -140,7 +140,7 @@ if ($next_pid == 81) {
 if ($this->db->trans_status() !== FALSE) {
   $this->db->trans_commit();
   $this->setMessage("Success process data");
-  $red = "home";
+  $red = $pid == 11 ? 'procurement/monitor' : 'home';
 } else {
   $this->db->trans_rollback();
   $this->setMessage("Failed process data");

@@ -85,13 +85,13 @@
         $('.menu-procurement, .monitor, .create').show();
         break;
       case "PIC PROCUREMENT":
-        $('.menu-procurement, .menu-commodity, .menu-vendor, .menu-division, .create, .monitor, .templ, .menu-users').show();
+        $('.menu-procurement, .menu-commodity, .menu-vendor, .menu-division, .monitor, .templ, .menu-users').show();
         break;
       case "FINANCE":
-        $('.menu-procurement, .monitor, .create').show();
+        $('.menu-procurement, .monitor').show();
         break;
       case "DIV HEAD":
-        $('.menu-procurement, .monitor, .create').show();
+        $('.menu-procurement, .monitor').show();
         break;
     }
   </script>
