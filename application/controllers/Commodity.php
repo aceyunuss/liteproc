@@ -105,8 +105,7 @@ class Commodity extends Core_Controller
       $this->db->group_end();
     }
 
-    $this->db->select('com_code');
-    $data['total'] = $this->Commodity_m->getCommodity()->num_rows();
+    $data['total'] = $this->Commodity_m->getCommodity("", "com_code")->num_rows();
 
     if (!empty($search)) {
       $this->db->group_start();

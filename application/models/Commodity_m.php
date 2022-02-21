@@ -71,11 +71,18 @@ class Commodity_m extends CI_Model
   }
 
 
-  public function getCommodity($code = "")
+  public function getCommodity($code = "", $sel = "")
   {
+    $sel = empty($sel) ? "*" : $sel;
     if (!empty($code)) {
       $this->db->where('com_code', $code);
     }
+  $this->db->select("$sel, 
+      CASE
+        WHEN type = 'Service' THEN
+        concat( com_code, ' - ', NAME, '; ', uom, '; ', spec ) 
+        ELSE concat( com_code, ' - ', NAME, '; ', uom, '; ', brand_name, '; ', brand_model, '; ', spec ) 
+      END as detail");
     $this->db->join("commodity_group", "commodity_group.group_code=commodity.group_code", "left");
     $this->db->join("(select group_code as p_code, group_name as p_name from commodity_group) p", "p.p_code=commodity_group.group_parent", "left");
 

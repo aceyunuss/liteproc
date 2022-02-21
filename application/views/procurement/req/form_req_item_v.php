@@ -7,9 +7,14 @@
       <div class="card-body">
 
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label">Item Name</label>
-          <div class="col-sm-6">
-            <input type="text" maxlength="255" class="form-control" id="item_name">
+          <label class="col-sm-2 col-form-label">Item</label>
+          <div class="col-sm-8">
+            <select class="select2" style="width: 100%;" id="item_com">
+              <option value="">-- Select --</option>
+              <?php foreach ($com as $vc) { ?>
+                <option value="<?= $vc['com_code'] ?>"><?= $vc['detail'] ?></option>
+              <?php } ?>
+            </select>
           </div>
         </div>
 
@@ -20,7 +25,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-sm-2 col-form-label">Type</label>
           <div class="col-sm-2">
             <select class="form-control form-control type" id="item_type">
@@ -29,7 +34,7 @@
               <option value="Service">Service</option>
             </select>
           </div>
-        </div>
+        </div> -->
 
         <center>
           <a class="btn btn-inverse-success add">Add Item</a>
@@ -38,13 +43,13 @@
         <br>
         <center>
           <div class="table-responsive">
-            <table class="table table-striped item_table">
+            <table class="table table-striped item_table" style="width: 100%;">
               <thead>
                 <tr>
                   <th style="text-align:center; width: 10%;"> # </th>
-                  <th style="text-align:center"> Item Name </th>
-                  <th style="text-align:center; width: 20%;"> Quantity </th>
-                  <th style="text-align:center; width: 20%;"> Type </th>
+                  <th style="text-align:center; width: 80%;"> Item Name </th>
+                  <th style="text-align:center; width: 10%;"> Quantity </th>
+                  <!-- <th style="text-align:center; width: 20%;"> Type </th> -->
                 </tr>
               </thead>
               <tbody>
@@ -62,26 +67,26 @@
 
     $('.add').click(function() {
       let counter = $('.item_table tr').length + 1;
-      let name = $('#item_name').val()
+      let com = $('#item_com').val()
+      let name = $('#item_com option:selected').text()
       let qty = $('#item_qty').val()
-      let typ = $('#item_type').val()
+      // let typ = $('#item_type').val()
 
-      if (name == "" || qty == "" || typ == "") {
+      if (name == "" || qty == "" || com == "") {
         alert('Please fill form item')
       } else {
 
         tbody = '<tr>\
                   <td><center><i class="remove fa fa-trash-o"></i></center></td>\
                   <td>' + name + '</td>\
-                  <input type="hidden" value="' + name + '" name="itm_name[]">\
-                  <td>' + qty + '</td>\
+                  <input type="hidden" value="' + com + '" name="itm_code[]">\
+                  <td><center>' + qty + '</center></td>\
                   <input type="hidden" value="' + qty + '" name="itm_qty[]">\
-                  <td><center>' + typ + '</center></td>\
-                  <input type="hidden" value="' + typ + '" name="itm_typ[]">\
                 </tr>';
 
         $('.item_table tbody').append(tbody)
-        $('#item_name, #item_qty, #item_type').val('')
+        $('#item_com, #item_qty').val('')
+        $('#item_com').trigger('change')
       }
     })
   })

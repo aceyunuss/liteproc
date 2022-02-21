@@ -59,8 +59,11 @@ if ($pid == 21) {
     $next_pid   = 23;
   }
 
-  foreach ($vn as $value) {
-    $this->db->where(['prc_number' => $prc_number, 'prv_vnd_id' => $value])->update('prc_vendor', ['prv_nego' => 1, 'prv_process' => "Negotiation"]);
+  if(!empty($vn)){
+
+    foreach ($vn as $value) {
+      $this->db->where(['prc_number' => $prc_number, 'prv_vnd_id' => $value])->update('prc_vendor', ['prv_nego' => 1, 'prv_process' => "Negotiation"]);
+    }
   }
 } else if ($pid = 24) {
 

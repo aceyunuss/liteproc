@@ -11,11 +11,10 @@
               <thead>
                 <tr>
                   <th style="text-align:center; width: 5%;"> No </th>
-                  <th style="text-align:center; width: 30%;"> Item Name </th>
-                  <th style="text-align:center; width: 5%;"> Quantity </th>
-                  <th style="text-align:center; width: 30%;"> Commodity </th>
-                  <th style="text-align:center; width: 20%;"> Estimated Price </th>
+                  <th style="text-align:center; width: 55%;"> Item Name </th>
+                  <th style="text-align:center; width: 10%;"> Quantity </th>
                   <th style="text-align:center; width: 10%;"> UOM </th>
+                  <th style="text-align:center; width: 20%;"> Estimated Price </th>
                 </tr>
               </thead>
               <tbody>
@@ -25,29 +24,17 @@
                       <center><?= $k + 1 ?></center>
                       <input type="hidden" name="rqi[<?= $v['rqi_id'] ?>]" value="<?= $v['rqi_id'] ?>">
                     </td>
-                    <td><?= $v['rqi_free_desc'] ?></td>
+                    <td><?= $v['rqi_desc'] ?></td>
                     <td>
                       <center class="qty" data-itm="<?= $v['rqi_id'] ?>"><?= $v['rqi_qty'] ?></center>
                     </td>
                     <td>
                       <center>
-                        <select class="select2" name="com_code[<?= $v['rqi_id'] ?>]" style="width: 100%;" required data-itm="<?= $v['rqi_id'] ?>">
-                          <option value="">-- Select --</option>
-                          <?php foreach ($com as $vc) { ?>
-                            <option value="<?= $vc['com_code'] ?>"><?= $vc['com_code'] . " - " . $vc['name'] ?></option>
-                          <?php } ?>
-                        </select>
+                        <uom ><?= $v['rqi_uom'] ?></uom>
                       </center>
-                      <input type="hidden" class="com_name_<?= $v['rqi_id'] ?>" name="com_name[<?= $v['rqi_id'] ?>]" value="">
                     </td>
                     <td>
                       <input class="form-control prc" data-itm="<?= $v['rqi_id'] ?>" type="number" name="price[<?= $v['rqi_id'] ?>]" required>
-                    </td>
-                    <td>
-                      <center>
-                        <uom class="uom_txt_<?= $v['rqi_id'] ?>"></uom>
-                        <input class="uom_<?= $v['rqi_id'] ?>" type="hidden" name="uom[<?= $v['rqi_id'] ?>]" value="">
-                      </center>
                     </td>
                   </tr>
                 <?php } ?>
@@ -74,21 +61,21 @@
 <script>
   $(document).ready(function() {
 
-    $("select[name*='com_code']").change(function() {
-      let thsval = $(this).val()
-      let item = $(this).data('itm')
+    // $("select[name*='com_code']").change(function() {
+    //   let thsval = $(this).val()
+    //   let item = $(this).data('itm')
 
-      $.ajax({
-        url: "<?= site_url('commodity/load_com/') ?>" + thsval,
-        type: "get",
-        dataType: "json",
-        success: function(data) {
-          $(".com_name_" + item).val(data.name)
-          $(".uom_" + item).val(data.uom)
-          $(".uom_txt_" + item).text(data.uom)
-        }
-      })
-    });
+    //   $.ajax({
+    //     url: "<?php //site_url('commodity/load_com/') ?>" + thsval,
+    //     type: "get",
+    //     dataType: "json",
+    //     success: function(data) {
+    //       $(".com_name_" + item).val(data.name)
+    //       $(".uom_" + item).val(data.uom)
+    //       $(".uom_txt_" + item).text(data.uom)
+    //     }
+    //   })
+    // });
 
     $(".prc").on("keyup", function() {
       let subtotal = 0;

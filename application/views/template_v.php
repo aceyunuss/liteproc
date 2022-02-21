@@ -69,3 +69,8 @@
     $('.select2').select2();
   });
 </script>
+<style>
+  .table td{
+    white-space: normal;
+  }
+</style>

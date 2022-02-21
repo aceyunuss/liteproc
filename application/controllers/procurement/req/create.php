@@ -1,5 +1,7 @@
 <?php
 
+$this->load->model('Commodity_m');
+
 $data['pg_title'] = "Create Procurement Request";
 
 $data['pid'] = 11;
@@ -19,5 +21,7 @@ $data['dir'] = "req";
 $data['act'] = ["", "Submit"];
 
 $data['shno'] = "none";
+
+$data['com'] = $this->Commodity_m->getCommodity()->result_array();
 
 $this->template('procurement/req/req_flow_v', $data);

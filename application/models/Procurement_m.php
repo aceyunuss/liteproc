@@ -148,7 +148,7 @@ class Procurement_m extends CI_Model
 
   public function getTodo()
   {
-    return $this->db->get("v_todo");
+    return $this->db->order_by("hist_id", "desc")->get("v_todo");
   }
 
 

@@ -2,6 +2,8 @@
 
 $post = $this->input->post();
 
+$this->load->model('Commodity_m');
+
 $pid = $post['pid'];
 
 $hist_id = $post['hist_id'];
@@ -43,8 +45,11 @@ if ($pid == 11) {
     'pid'           => $pid
   ];
 
-  foreach ($post['itm_name'] as $key => $value) {
-    $insert_item[$key]['rqi_free_desc'] = $post['itm_name'][$key];
+  foreach ($post['itm_code'] as $key => $value) {
+    $com = $this->Commodity_m->getCommodity($post['itm_code'][$key], "uom")->row_array();
+    $insert_item[$key]['rqi_code']      = $post['itm_code'][$key];
+    $insert_item[$key]['rqi_desc']      = $com['detail'];
+    $insert_item[$key]['rqi_uom']       = $com['uom'];
     $insert_item[$key]['rqi_qty']       = $post['itm_qty'][$key];
     $insert_item[$key]['req_number']    = $req_number;
   }
@@ -71,13 +76,13 @@ if ($pid == 11) {
   $update_header['pid'] = $next_pid;
 } else if ($pid == 12) {
 
-  foreach ($post['com_code'] as $k => $v) {
+  foreach ($post['price'] as $k => $v) {
 
     $item = [
-      'rqi_code'    => $post['com_code'][$k],
-      'rqi_desc'    => $post['com_name'][$k],
+      // 'rqi_code'    => $post['com_code'][$k],
+      // 'rqi_desc'    => $post['com_name'][$k],
       'rqi_price'   => $post['price'][$k],
-      'rqi_uom'     => $post['uom'][$k]
+      // 'rqi_uom'     => $post['uom'][$k]
     ];
 
     $this->Procurement_m->updateReqItem($post['rqi'][$k], $item);
