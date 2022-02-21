@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div class="form-group row">
+        <!-- <div class="form-group row">
           <label class="col-sm-2 col-form-label">Payment Attachment</label>
           <div class="col-sm-6">
             <?php if ($pa) { ?>
@@ -85,7 +85,7 @@
               </label>
             <?php } ?>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>

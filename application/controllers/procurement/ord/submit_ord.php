@@ -33,7 +33,9 @@ if ($pid == 31) {
 
   $next_role  = "FINANCE";
   $next_pid   = 32;
-} else if ($pid == 32) {
+} 
+/*
+else if ($pid == 32) {
 
   if (!empty($_FILES['pay_att']['name'])) {
     $this->session->set_userdata("dir_upload", "ord");
@@ -65,6 +67,7 @@ if ($ses_usr['role'] == "VENDOR") {
   $user['fullname'] = $ses_usr['name'];
   $user['role_name'] = $ses_usr['role'];
 }
+*/
 
 $curr = [
   'orh_comment'     => $post['comment'],
@@ -75,9 +78,9 @@ $curr = [
 
 $this->Procurement_m->updateOrdHist($hist_id, $curr);
 
-$this->Procurement_m->nextOrd($ord_number, $next_pid, $next_role);
+// $this->Procurement_m->nextOrd($ord_number, $next_pid, $next_role);
 
-$update_header['pid'] = $next_pid;
+// $update_header['pid'] = $next_pid;
 
 if (!empty($update_header)) {
   $this->Procurement_m->updateOrdHeader($ord_number, $update_header);
