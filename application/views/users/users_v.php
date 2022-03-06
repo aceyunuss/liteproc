@@ -23,7 +23,7 @@
 
     <div class="card">
       <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-        <h4 class="card-title mb-0">Data Users</h4>
+        <h5 class="font-weight-semibold mb-0">Data Users</h5>
       </div>
       <div class="card-body">
         <a class="btn btn-success btn-md" href="<?= site_url('users/add') ?> "><i class="fa fa-plus"></i>Add Users<a>

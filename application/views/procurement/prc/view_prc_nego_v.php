@@ -2,7 +2,7 @@
   <div class="col-md-12 grid-margin">
     <div class="card">
       <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-        <h4 class="card-title mb-0">Vendor Nego</h4>
+        <h5 class="font-weight-semibold mb-0">Vendor Nego</h5>
       </div>
 
       <div class="card-body">
@@ -24,7 +24,7 @@
   <div class="col-md-12 grid-margin">
     <div class="card">
       <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-        <h4 class="card-title mb-0">Vendor Winner</h4>
+        <h5 class="font-weight-semibold mb-0">Vendor Winner</h5>
       </div>
 
       <div class="card-body">
@@ -51,7 +51,7 @@
       <div class="modal-body" style="overflow-y: auto;">
 
         <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-          <h4 class="card-title mb-0">Item</h4>
+          <h5 class="font-weight-semibold mb-0">Item</h5>
         </div>
         <div class="card-body">
           <center>

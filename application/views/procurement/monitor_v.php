@@ -24,7 +24,7 @@
       <div class="col-md-12 grid-margin">
         <div class="card">
           <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Monitor Request</h4>
+            <h5 class="font-weight-semibold mb-0">Monitor Request</h5>
           </div>
 
           <div class="card-body">
@@ -44,7 +44,7 @@
       <div class="col-md-12 grid-margin">
         <div class="card">
           <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Monitor Procurement</h4>
+            <h5 class="font-weight-semibold mb-0">Monitor Procurement</h5>
           </div>
 
           <div class="card-body">
@@ -64,7 +64,7 @@
       <div class="col-md-12 grid-margin">
         <div class="card">
           <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-            <h4 class="card-title mb-0">Monitor Order</h4>
+            <h5 class="font-weight-semibold mb-0">Monitor Order</h5>
           </div>
 
           <div class="card-body">

@@ -2,7 +2,7 @@
   <div class="col-md-12 grid-margin">
     <div class="card">
       <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-        <h4 class="card-title mb-0">Vendor</h4>
+        <h5 class="font-weight-semibold mb-0">Vendor</h5>
       </div>
 
       <div class="card-body">
@@ -33,7 +33,7 @@
         <input type="hidden" name="prv_id" id="prv" value="">
 
         <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-          <h4 class="card-title mb-0">Header</h4>
+          <h5 class="font-weight-semibold mb-0">Header</h5>
         </div>
         <div class="card-body">
 
@@ -64,7 +64,7 @@
 
 
         <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-          <h4 class="card-title mb-0">Item</h4>
+          <h5 class="font-weight-semibold mb-0">Item</h5>
         </div>
         <div class="card-body">
           <center>
@@ -98,7 +98,7 @@
 
 
         <div class="p-4 pr-5 border-bottom bg-light d-flex justify-content-between">
-          <h4 class="card-title mb-0">Evaluation</h4>
+          <h5 class="font-weight-semibold mb-0">Evaluation</h5>
         </div>
         <div class="card-body evals">
           <?php foreach ($eval as $key => $value) { ?>
