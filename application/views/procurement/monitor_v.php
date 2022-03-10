@@ -43,6 +43,17 @@
               </div>
             </div>
 
+            <div class="form-group row">
+              <label class="col-sm-1 col-form-label">Date</label>
+              <div class="col-sm-2">
+                <input type="date" id="req_fr" class="req_dt datetimepicker form-control">
+              </div>
+              &ndash;
+              <div class="col-sm-2">
+                <input type="date" id="req_to" class="req_dt datetimepicker form-control">
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="table-responsive">
@@ -79,6 +90,17 @@
               </div>
             </div>
 
+            <div class="form-group row">
+              <label class="col-sm-1 col-form-label">Date</label>
+              <div class="col-sm-2">
+                <input type="date" id="prc_fr" class="prc_dt datetimepicker form-control">
+              </div>
+              &ndash;
+              <div class="col-sm-2">
+                <input type="date" id="prc_to" class="prc_dt datetimepicker form-control">
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="table-responsive">
@@ -112,6 +134,17 @@
                   <?php }
                   } ?>
                 </select>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-1 col-form-label">Date</label>
+              <div class="col-sm-2">
+                <input type="date" id="ord_fr" class="ord_dt datetimepicker form-control">
+              </div>
+              &ndash;
+              <div class="col-sm-2">
+                <input type="date" id="ord_to" class="ord_dt datetimepicker form-control">
               </div>
             </div>
 
@@ -273,11 +306,19 @@
     });
 
 
-    $('#req').change(function() {
-      let req_stat = $(this).val();
+    $('#req, .req_dt').change(function() {
+
+      let req_stat = $("#req").val();
+      let req_fr = $("#req_fr").val();
+      let req_to = $("#req_to").val();
+      let req_dt = ""
+
+      if (req_fr != "" && req_to != "") {
+        req_dt = "&fr=" + req_fr + "&to=" + req_to
+      }
 
       $req_table.bootstrapTable('refresh', {
-        url: "<?php echo site_url('procurement/data_monitor_req') ?>?status=" + req_stat
+        url: "<?php echo site_url('procurement/data_monitor_req') ?>?status=" + req_stat + req_dt
       })
 
     })
@@ -380,12 +421,20 @@
 
     });
 
-    
-    $('#prc').change(function() {
-      let prc_stat = $(this).val();
+
+    $('#prc, .prc_dt').change(function() {
+
+      let prc_stat = $("#prc").val();
+      let prc_fr = $("#prc_fr").val();
+      let prc_to = $("#prc_to").val();
+      let prc_dt = ""
+
+      if (prc_fr != "" && prc_to != "") {
+        prc_dt = "&fr=" + prc_fr + "&to=" + prc_to
+      }
 
       $prc_table.bootstrapTable('refresh', {
-        url: "<?php echo site_url('procurement/data_monitor_prc') ?>?status=" + prc_stat
+        url: "<?php echo site_url('procurement/data_monitor_prc') ?>?status=" + prc_stat + prc_dt
       })
 
     })
@@ -489,12 +538,20 @@
 
     });
 
-    
-    $('#ord').change(function() {
-      let ord_stat = $(this).val();
+
+    $('#ord, .ord_dt').change(function() {
+
+      let ord_stat = $("#ord").val();
+      let ord_fr = $("#ord_fr").val();
+      let ord_to = $("#ord_to").val();
+      let ord_dt = ""
+
+      if (ord_fr != "" && ord_to != "") {
+        ord_dt = "&fr=" + ord_fr + "&to=" + ord_to
+      }
 
       $ord_table.bootstrapTable('refresh', {
-        url: "<?php echo site_url('procurement/data_monitor_ord') ?>?status=" + ord_stat
+        url: "<?php echo site_url('procurement/data_monitor_ord') ?>?status=" + ord_stat + ord_dt
       })
 
     })

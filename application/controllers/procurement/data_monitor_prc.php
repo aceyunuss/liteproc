@@ -9,6 +9,8 @@ $search = (isset($get['search']) && !empty($get['search'])) ? $this->db->escape_
 $offset = (isset($get['offset']) && !empty($get['offset'])) ? $get['offset'] : 0;
 $field_order = (isset($get['sort']) && !empty($get['sort'])) ? $get['sort'] : "number";
 $status = (isset($get['status']) && !empty($get['status'])) ? $get['status'] : "";
+$fr = (isset($get['fr']) && !empty($get['fr'])) ? $get['fr'] : "";
+$to = (isset($get['to']) && !empty($get['to'])) ? $get['to'] : "";
 
 
 if (!empty($search)) {
@@ -23,6 +25,9 @@ if (!empty($search)) {
 
 if(!empty($status)){
   $this->db->where('pid', $status);
+}
+if (!empty($fr) && !empty($to)) {
+  $this->db->where("created_date BETWEEN '" . $fr . "' AND '" . $to . "'");
 }
 $this->db->select('prc_number');
 $data['total'] = $this->Procurement_m->getPrcHead()->num_rows();
@@ -47,6 +52,9 @@ if (!empty($limit)) {
 
 if(!empty($status)){
   $this->db->where('pid', $status);
+}
+if (!empty($fr) && !empty($to)) {
+  $this->db->where("created_date BETWEEN '" . $fr . "' AND '" . $to . "'");
 }
 $rows = $this->Procurement_m->getPrcHead()->result_array();
 
