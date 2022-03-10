@@ -19,7 +19,7 @@
       </div>
     <?php $this->session->unset_userdata('message');
     } ?>
-    
+
     <div class="row">
       <div class="col-md-12 grid-margin">
         <div class="card">
@@ -28,6 +28,21 @@
           </div>
 
           <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-1 col-form-label">Status</label>
+              <div class="col-sm-4">
+                <select class="form-control" id="req">
+                  <option value="">-- All --</option>
+                  <?php
+                  foreach ($status as $k => $v) {
+                    if ($v['pid'] < 20 || $v['pid'] == 81 || $v['pid'] == 91) { ?>
+                      <option value="<?= $v['pid'] ?>"><?= $v['pid_name'] ?></option>
+                  <?php }
+                  } ?>
+                </select>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="table-responsive">
@@ -48,6 +63,22 @@
           </div>
 
           <div class="card-body">
+
+            <div class="form-group row">
+              <label class="col-sm-1 col-form-label">Status</label>
+              <div class="col-sm-4">
+                <select class="form-control" id="prc">
+                  <option value="">-- All --</option>
+                  <?php
+                  foreach ($status as $k => $v) {
+                    if (($v['pid'] > 20 && $v['pid'] < 30) || $v['pid'] == 82 || $v['pid'] == 92) { ?>
+                      <option value="<?= $v['pid'] ?>"><?= $v['pid_name'] ?></option>
+                  <?php }
+                  } ?>
+                </select>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="table-responsive">
@@ -68,6 +99,22 @@
           </div>
 
           <div class="card-body">
+
+            <div class="form-group row">
+              <label class="col-sm-1 col-form-label">Status</label>
+              <div class="col-sm-4">
+                <select class="form-control" id="ord">
+                  <option value="">-- All --</option>
+                  <?php
+                  foreach ($status as $k => $v) {
+                    if (in_array($v['pid'], [31, 83, 93])) { ?>
+                      <option value="<?= $v['pid'] ?>"><?= $v['pid_name'] ?></option>
+                  <?php }
+                  } ?>
+                </select>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-lg-12">
                 <div class="table-responsive">
@@ -224,11 +271,21 @@
       }, 200);
 
     });
+
+
+    $('#req').change(function() {
+      let req_stat = $(this).val();
+
+      $req_table.bootstrapTable('refresh', {
+        url: "<?php echo site_url('procurement/data_monitor_req') ?>?status=" + req_stat
+      })
+
+    })
   </script>
 
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
     var $prc_table = $('#prc_table')
 
     $(function() {
@@ -322,12 +379,22 @@
       }, 200);
 
     });
+
+    
+    $('#prc').change(function() {
+      let prc_stat = $(this).val();
+
+      $prc_table.bootstrapTable('refresh', {
+        url: "<?php echo site_url('procurement/data_monitor_prc') ?>?status=" + prc_stat
+      })
+
+    })
   </script>
 
 
 
 
-<script type="text/javascript">
+  <script type="text/javascript">
     var $ord_table = $('#ord_table')
 
     $(function() {
@@ -421,4 +488,14 @@
       }, 200);
 
     });
+
+    
+    $('#ord').change(function() {
+      let ord_stat = $(this).val();
+
+      $ord_table.bootstrapTable('refresh', {
+        url: "<?php echo site_url('procurement/data_monitor_ord') ?>?status=" + ord_stat
+      })
+
+    })
   </script>

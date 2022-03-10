@@ -8,6 +8,7 @@ $limit = (isset($get['limit']) && !empty($get['limit'])) ? $get['limit'] : 10;
 $search = (isset($get['search']) && !empty($get['search'])) ? $this->db->escape_like_str(strtolower($get['search'])) : "";
 $offset = (isset($get['offset']) && !empty($get['offset'])) ? $get['offset'] : 0;
 $field_order = (isset($get['sort']) && !empty($get['sort'])) ? $get['sort'] : "number";
+$status = (isset($get['status']) && !empty($get['status'])) ? $get['status'] : "";
 
 
 if (!empty($search)) {
@@ -20,6 +21,9 @@ if (!empty($search)) {
   $this->db->group_end();
 }
 
+if(!empty($status)){
+  $this->db->where('pid', $status);
+}
 $this->db->select('prc_number');
 $data['total'] = $this->Procurement_m->getPrcHead()->num_rows();
 
@@ -41,6 +45,9 @@ if (!empty($limit)) {
   $this->db->limit($limit, $offset);
 }
 
+if(!empty($status)){
+  $this->db->where('pid', $status);
+}
 $rows = $this->Procurement_m->getPrcHead()->result_array();
 
 foreach ($rows as $key => $value) {
