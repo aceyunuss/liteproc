@@ -195,6 +195,15 @@
             valign: 'middle'
           },
           {
+            field: 'creted_date',
+            title: 'Date',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
             field: 'process',
             title: 'Process',
             sortable: true,

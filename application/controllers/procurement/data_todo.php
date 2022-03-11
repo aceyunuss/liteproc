@@ -16,6 +16,7 @@ if (!empty($search)) {
   $this->db->or_like("LOWER(name)", $search);
   $this->db->or_like("LOWER(pid_name)", $search);
   $this->db->or_like("LOWER(role)", $search);
+  $this->db->or_like("created_date", $search);
   $this->db->group_end();
 }
 
@@ -30,6 +31,7 @@ if (!empty($search)) {
   $this->db->or_like("LOWER(name)", $search);
   $this->db->or_like("LOWER(pid_name)", $search);
   $this->db->or_like("LOWER(role)", $search);
+  $this->db->or_like("created_date", $search);
   $this->db->group_end();
 }
 

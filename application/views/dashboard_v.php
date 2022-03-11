@@ -203,6 +203,15 @@
             valign: 'middle'
           },
           {
+            field: 'created_date',
+            title: 'Date',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
             field: 'pid_name',
             title: 'Process',
             sortable: true,

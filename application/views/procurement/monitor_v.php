@@ -288,6 +288,15 @@
             valign: 'middle'
           },
           {
+            field: 'created_date',
+            title: 'Date',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
             field: 'pname',
             title: 'Process',
             sortable: true,
@@ -397,6 +406,15 @@
           {
             field: 'div_name',
             title: 'Division',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
+            field: 'created_date',
+            title: 'Date',
             sortable: true,
             order: true,
             searchable: true,
@@ -514,6 +532,15 @@
           {
             field: 'div_name',
             title: 'Division',
+            sortable: true,
+            order: true,
+            searchable: true,
+            align: 'center',
+            valign: 'middle'
+          },
+          {
+            field: 'created_date',
+            title: 'Date',
             sortable: true,
             order: true,
             searchable: true,
