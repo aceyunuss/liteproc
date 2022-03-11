@@ -29,7 +29,7 @@
 
           <div class="card-body">
             <div class="form-group row">
-              <label class="col-sm-1 col-form-label">Status</label>
+              <label class="col-sm-1 col-form-label">Process</label>
               <div class="col-sm-4">
                 <select class="form-control" id="req">
                   <option value="">-- All --</option>
@@ -76,7 +76,7 @@
           <div class="card-body">
 
             <div class="form-group row">
-              <label class="col-sm-1 col-form-label">Status</label>
+              <label class="col-sm-1 col-form-label">Process</label>
               <div class="col-sm-4">
                 <select class="form-control" id="prc">
                   <option value="">-- All --</option>
@@ -123,7 +123,7 @@
           <div class="card-body">
 
             <div class="form-group row">
-              <label class="col-sm-1 col-form-label">Status</label>
+              <label class="col-sm-1 col-form-label">Process</label>
               <div class="col-sm-4">
                 <select class="form-control" id="ord">
                   <option value="">-- All --</option>
