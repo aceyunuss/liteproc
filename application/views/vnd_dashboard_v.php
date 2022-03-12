@@ -186,7 +186,7 @@
             valign: 'middle'
           },
           {
-            field: 'name',
+            field: 'NAME',
             title: 'Name',
             sortable: true,
             order: true,
@@ -195,7 +195,7 @@
             valign: 'middle'
           },
           {
-            field: 'creted_date',
+            field: 'created_date',
             title: 'Date',
             sortable: true,
             order: true,

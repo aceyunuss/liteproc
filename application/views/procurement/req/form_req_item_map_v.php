@@ -11,10 +11,10 @@
               <thead>
                 <tr>
                   <th style="text-align:center; width: 5%;"> No </th>
-                  <th style="text-align:center; width: 55%;"> Item Name </th>
+                  <th style="text-align:center; width: 35%;"> Item Name </th>
                   <th style="text-align:center; width: 10%;"> Quantity </th>
                   <th style="text-align:center; width: 10%;"> UOM </th>
-                  <th style="text-align:center; width: 20%;"> Estimated Price </th>
+                  <th style="text-align:center; width: 40%;"> Estimated Price </th>
                 </tr>
               </thead>
               <tbody>
@@ -30,11 +30,19 @@
                     </td>
                     <td>
                       <center>
-                        <uom ><?= $v['rqi_uom'] ?></uom>
+                        <uom><?= $v['rqi_uom'] ?></uom>
                       </center>
                     </td>
                     <td>
-                      <input class="form-control prc" data-itm="<?= $v['rqi_id'] ?>" type="number" name="price[<?= $v['rqi_id'] ?>]" required>
+                      <div class="form-group row">
+                        <div class="col-sm-5">
+                          <input class="form-control prc prc_start" data-itm="<?= $v['rqi_id'] ?>" type="number" name="price[<?= $v['rqi_id'] ?>]" required>
+                        </div>
+                        <p class="col-form-label">-</p>
+                        <div class="col-sm-5">
+                          <input class="form-control prc prc_end" data-itm="<?= $v['rqi_id'] ?>" type="number" name="price_end[<?= $v['rqi_id'] ?>]" required>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 <?php } ?>
@@ -45,11 +53,13 @@
         <hr>
         <br>
         <div class="form-group row">
-          <div class="col-sm-9">
+          <div class="col-sm-7">
             <h3 style="text-align: right;">Total</h3>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-5">
             <h3 style="text-align: right;" class="total">0</h3>
+            <input type="hidden" id="total_start">
+            <input type="hidden" id="total_end">
           </div>
         </div>
 
@@ -66,7 +76,8 @@
     //   let item = $(this).data('itm')
 
     //   $.ajax({
-    //     url: "<?php //site_url('commodity/load_com/') ?>" + thsval,
+    //     url: "<?php //site_url('commodity/load_com/') 
+                  ?>" + thsval,
     //     type: "get",
     //     dataType: "json",
     //     success: function(data) {
@@ -77,19 +88,42 @@
     //   })
     // });
 
-    $(".prc").on("keyup", function() {
-      let subtotal = 0;
-      let total = 0;
-      $('.prc').each(function(i, obj) {
+    $(".prc_start").on("keyup", function() {
+      let subtotal_start = 0;
+      let total_start = 0;
+      let prc = 0;
+      $('.prc_start').each(function(i, obj) {
         itm = $(this).data('itm');
-        prc = ($(this).val() == "") ? 0 : parseInt($(this).val());
+        prc = $('.prc_start[data-itm=' + itm + ']').val()
+        prc_start = (prc == 0) ? 0 : parseInt(prc);
         qty = parseInt($('.qty[data-itm=' + itm + ']').text());
 
-        total = prc * qty;
-        subtotal += total;
+        total_start = prc_start * qty;
+        subtotal_start += total_start;
       });
-      txt_subtotal = subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      $(".total").text(txt_subtotal);
+      txt_subtotal_start = subtotal_start.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      txt_subtotal_end = $("#total_end").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      $("#total_start").val(txt_subtotal_start);
+      $(".total").text(txt_subtotal_start + " - " + txt_subtotal_end)
+    })
+
+
+    $(".prc_end").on("keyup", function() {
+      let subtotal_end = 0;
+      let total_end = 0;
+      $('.prc_end').each(function(i, obj) {
+        itm = $(this).data('itm');
+        prc = $('.prc_end[data-itm=' + itm + ']').val()
+        prc_end = (prc == 0) ? 0 : parseInt(prc);
+        qty = parseInt($('.qty[data-itm=' + itm + ']').text());
+
+        total_end = prc_end * qty;
+        subtotal_end += total_end;
+      });
+      txt_subtotal_end = subtotal_end.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      txt_subtotal_start = $("#total_start").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      $("#total_end").val(txt_subtotal_end);
+      $(".total").text(txt_subtotal_start + " - " + txt_subtotal_end)
     })
   })
 </script>

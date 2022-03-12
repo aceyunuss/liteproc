@@ -81,7 +81,8 @@ if ($pid == 11) {
     $item = [
       // 'rqi_code'    => $post['com_code'][$k],
       // 'rqi_desc'    => $post['com_name'][$k],
-      'rqi_price'   => $post['price'][$k],
+      'rqi_price'     => $post['price'][$k],
+      'rqi_price_end' => $post['price_end'][$k],
       // 'rqi_uom'     => $post['uom'][$k]
     ];
 

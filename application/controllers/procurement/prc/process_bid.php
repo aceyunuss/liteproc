@@ -26,6 +26,7 @@ if (empty($item)) {
       'pvi_free_desc' => $v['pri_free_desc'],
       'pvi_qty'       => $v['pri_qty'],
       'pvi_price'     => $v['pri_price'],
+      'pvi_price_end' => $v['pri_price_end'],
       'pvi_uom'       => $v['pri_uom'],
       'prc_number'    => $v['prc_number'],
       'prv_id'        => $id

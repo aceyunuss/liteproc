@@ -93,25 +93,30 @@
                     <thead>
                       <tr>
                         <th style="text-align:center; width: 5%;"> No </th>
-                        <th style="text-align:center; width: 40%;"> Item Name </th>
-                        <th style="text-align:center; width: 5%;"> Quantity </th>
-                        <th style="text-align:center; width: 20%;"> Estimated Price </th>
-                        <th style="text-align:center; width: 10%;"> UOM </th>
-                        <th style="text-align:center; width: 20%;"> Quot Price </th>
+                        <th style="text-align:center; width: 35%;"> Item Name </th>
+                        <th style="text-align:center; width: 7%;"> Quantity </th>
+                        <th style="text-align:center; width: 30%;"> Estimated Price </th>
+                        <th style="text-align:center; width: 8%;"> UOM </th>
+                        <th style="text-align:center; width: 15%;"> Quot Price </th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $total = $subtotal = 0;
+                      $total = $subtotal = $total_end = $subtotal_end = $total_q = $subtotal_q =0;
+                      
                       foreach ($item as $k => $v) {
                         $total = $v['pvi_price'] * $v['pvi_qty'];
+                        $total_end = $v['pvi_price_end'] * $v['pvi_qty'];
+                        $total_q = $v['pvi_qprice'] * $v['pvi_qty'];
                         $subtotal += $total;
+                        $subtotal_end += $total_end;
+                        $subtotal_q += $total_q;
                       ?>
                         <tr>
                           <td class="text-center"><?= $k + 1 ?></td>
                           <td><?= $v['pvi_desc'] ?></td>
                           <td class="text-center qty" data-itm="<?= $v['pvi_id'] ?>"><?= $v['pvi_qty'] ?></td>
-                          <td class="text-right"><?= number_format($v['pvi_price'], 2, ',', '.') ?></td>
+                          <td class="text-center"><?= number_format($v['pvi_price'], 2, ',', '.') ?> - <?= number_format($v['pvi_price_end'], 2, ',', '.') ?></td>
                           <td class="text-center"><?= $v['pvi_uom'] ?></td>
                           <td>
                             <input required type="number" data-itm="<?= $v['pvi_id'] ?>" min="0" name="qprice[<?= $v['pvi_id'] ?>]" class="prc form-control" value="<?= $v['pvi_qprice'] ?>">
@@ -125,19 +130,19 @@
               <hr>
               <br>
               <div class="form-group row">
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                   <h4 style="text-align: right;">Total Estimated Price</h4>
                 </div>
-                <div class="col-sm-3">
-                  <h4 style="text-align: right;"><?= number_format($subtotal, 2, ',', '.') ?></h4>
+                <div class="col-sm-4">
+                  <h4 style="text-align: right;"><?= number_format($subtotal, 2, ',', '.') ?> - <?= number_format($subtotal_end, 2, ',', '.') ?></h4>
                 </div>
               </div>
               <div class="form-group row">
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                   <h4 style="text-align: right;">Total Quot Price</h4>
                 </div>
-                <div class="col-sm-3">
-                  <h4 style="text-align: right;" class="total"><?= number_format($subtotal, 2, ',', '.') ?></h4>
+                <div class="col-sm-4">
+                  <h4 style="text-align: right;" class="total"><?= number_format($subtotal_q, 2, ',', '.') ?></h4>
                 </div>
               </div>
 

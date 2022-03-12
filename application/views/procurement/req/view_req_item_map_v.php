@@ -12,24 +12,26 @@
                 <tr>
                   <th style="text-align:center; width: 5%;"> No </th>
                   <!-- <th style="text-align:center; width: 30%;"> Item Name </th> -->
-                  <th style="text-align:center; width: 60%;"> Commodity </th>
-                  <th style="text-align:center; width: 5%;"> Quantity </th>
-                  <th style="text-align:center; width: 20%;"> Estimated Price </th>
+                  <th style="text-align:center; width: 50%;"> Commodity </th>
+                  <th style="text-align:center; width: 10%;"> Quantity </th>
+                  <th style="text-align:center; width: 25%;"> Estimated Price </th>
                   <th style="text-align:center; width: 10%;"> UOM </th>
                 </tr>
               </thead>
               <tbody>
                 <?php
-                $total = $subtotal = 0;
+                $total = $subtotal = $total_end = $subtotal_end = 0;
                 foreach ($req_item as $k => $v) {
                   $total = $v['rqi_price'] * $v['rqi_qty'];
+                  $total_end = $v['rqi_price_end'] * $v['rqi_qty'];
                   $subtotal += $total;
+                  $subtotal_end += $total_end;
                 ?>
                   <tr>
                     <td class="text-center"><?= $k + 1 ?></td>
                     <td><?= $v['rqi_desc'] ?></td>
                     <td class="text-center"><?= $v['rqi_qty'] ?></td>
-                    <td class="text-right"><?= number_format($v['rqi_price'], 2, ',', '.') ?></td>
+                    <td class="text-center"><?= number_format($v['rqi_price'], 2, ',', '.') ?> - <?= number_format($v['rqi_price_end'], 2, ',', '.') ?></td>
                     <td class="text-center"><?= $v['rqi_uom'] ?></td>
                   </tr>
                 <?php } ?>
@@ -40,11 +42,11 @@
         <hr>
         <br>
         <div class="form-group row">
-          <div class="col-sm-9">
+          <div class="col-sm-7">
             <h3 style="text-align: right;">Total</h3>
           </div>
-          <div class="col-sm-3">
-            <h3 style="text-align: right;" class="total"><?= number_format($subtotal, 2, ',', '.') ?></h3>
+          <div class="col-sm-5">
+            <h3 style="text-align: right;" class="total"><?= number_format($subtotal, 2, ',', '.') ?> - <?= number_format($subtotal_end, 2, ',', '.') ?></h3>
           </div>
         </div>
 

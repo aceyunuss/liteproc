@@ -438,6 +438,7 @@ class Procurement_m extends CI_Model
         'pri_free_desc' => $v['rqi_free_desc'],
         'pri_qty'       => $v['rqi_qty'],
         'pri_price'     => $v['rqi_price'],
+        'pri_price_end' => $v['rqi_price_end'],
         'pri_uom'       => $v['rqi_uom'],
         'prc_number'    => $head['prc_number'],
       ];

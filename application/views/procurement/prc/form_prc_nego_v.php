@@ -41,20 +41,11 @@
       <div class="card-body">
         <div class="form-group row">
           <div class="col-sm-12">
-            <?php
-            $sc = 0;
-            $got = "";
-            foreach ($vnd_list as $key => $value) {
-              if ($value['score'] > $sc) {
-                $got = $value['vendor_id'];
-              }
-              $sc = $value['score'];
-            } ?>
+            <?php $w = max(array_column($vnd_list, 'score')); ?>
             <center>
               <select class="form-control select2 winner" name="winner" style="width: 50%;">
-                <option value="">-- Select --</option>
                 <?php foreach ($vnd_list as $key => $value) { ?>
-                  <option <?= $got != $value['vendor_id'] ? "disabled" : "" ?> value="<?= $value['prv_vnd_id'] ?>"><?= $value['vendor_name'] . " (" . $value['score'] . ")" ?></option>
+                  <option <?= $w != $value['score'] ? "disabled" : "" ?> <?= $w == $value['score'] ? "selected" : "" ?> value="<?= $value['prv_vnd_id'] ?>"><?= $value['vendor_name'] . " (" . $value['score'] . ")" ?></option>
                 <?php } ?>
               </select>
             </center>
